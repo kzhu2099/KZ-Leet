@@ -5,7 +5,7 @@ build-backend = 'setuptools.build_meta'
 [project]
 name = 'kzleet'
 
-version = '2025.05.29.7'
+version = '2025.05.29.8'
 
 description = 'a library with frequently updated LeetCode solutions created by the community'
 
@@ -42,3 +42,6 @@ Issues = 'https://github.com/kzhu2099/KZ-leet/issues'
 
 [tool.setuptools.packages.find]
 include = ['kzleet', 'kzleet.*']
+
+[tool.setuptools]
+license-files = []
