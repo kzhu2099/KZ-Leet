@@ -1,4 +1,4 @@
-from Solution import Solution
+from ..Solution import Solution
 
 # class Solution_2025MAYXX(Solution):
 
@@ -142,6 +142,7 @@ class Solution_2025MAY28(Solution):
         return result
 
 class Solution_2025MAY29(Solution):
+
     '''
     Explanation for the solution:
 
@@ -153,11 +154,15 @@ class Solution_2025MAY29(Solution):
     The amount of "even" parity nodes is the same as the amount of nodes in Tree 1 with the same parity.
     Then, it is added to the best possible solution from Tree 2, since we can determine the node connection.
     '''
+
     def __init__(self):
         super().__init__('Kevin Zhu', '2025-05-29')
 
     def maxTargetNodes(self, edges1, edges2):
         """
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/maximize-the-number-of-target-nodes-after-connecting-trees-ii/?envType=daily-question&envId=2025-05-29
+
         :type edges1: List[List[int]]
         :type edges2: List[List[int]]
         :rtype: List[int]

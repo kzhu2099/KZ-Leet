@@ -1,2 +1,2 @@
-from _2025.May import *
+from ._2025.MAY import *
 from .Solution import Solution

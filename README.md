@@ -12,6 +12,7 @@ This is a library with solutions of LeetCode everyday that is updated as quickly
 If you have a solution or would like to contribute a different one email me at kzhu2099@gmail.com. If I use yours, I will make sure to give credit!!
 
 Note: dates follow the UTC date as does LeetCode.
+Important: please visit the disclaimer below.
 
 ## Features
 
@@ -73,3 +74,9 @@ For single digit days add a leading zero (May 09, 2025).
 ## License
 
 The License is an MIT License found in the LICENSE file.
+
+## Disclaimer
+
+This library provides personal / community solutions from LeetCode.
+They are not the Editorial solutions that you find there, and are in no means as good as theirs.
+This is for educational purposes to provide a different perspective on problems.
