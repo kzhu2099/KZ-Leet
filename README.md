@@ -65,8 +65,7 @@ deactivate # when you are completely done
 
 You may look at the problems by importing like so:
 
-`from kzleet._YEAR.MONTH import Solution_YEARMONTHDAY`
-ex: `from kzleet._2025.MAY import Solution_2025MAY27` for the solution to May 27, 2025.
+`from kzleet import Solution_####` where `####` is the problem number of the problem. They are also sorted by the LeetCode given difficulty in different files.
 
 For months with more than three letters, use the FULL ame (like SEPTEMBER).
 For single digit days add a leading zero (May 09, 2025).

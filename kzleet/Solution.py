@@ -1,10 +1,11 @@
 class Solution(object):
-    def __init__(self, author, date):
+    def __init__(self, author, number, difficulty):
         self.author = author
-        self.date = date
+        self.number = number
+        self.difficulty = difficulty
 
     def __str__(self):
-        return f'LeetCode Solution by {self.author} on {self.date}'
+        return f'LeetCode Solution for {self.number} by {self.author}. Problem difficulty: {self.difficulty}'
 
     def main(self, *args):
         '''

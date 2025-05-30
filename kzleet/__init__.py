@@ -1,2 +1,4 @@
-from ._2025.MAY import *
+from .Easy import *
+from .Medium import *
+from .Hard import *
 from .Solution import Solution
