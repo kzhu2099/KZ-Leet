@@ -212,3 +212,48 @@ class Solution_2025MAY29(Solution):
                 result.append(odd_count1 + best)
 
         return result
+
+class Solution_2025MAY30(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', '2025-05-30')
+
+    def closestMeetingNode(self, edges, node1, node2):
+        """
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/find-closest-node-to-given-two-nodes/?envType=daily-question&envId=2025-05-30
+        
+        :type edges: List[int]
+        :type node1: int
+        :type node2: int
+        :rtype: int
+        """
+
+        def distances(node):
+            distance = 0
+            v = set()
+            r = [len(edges) * 10] * len(edges)
+            while True:
+                if node in v: break
+                v.add(node)
+                r[node] = distance
+                distance += 1
+                node = edges[node]
+                if node == -1: break
+
+            return r
+
+        d1 = distances(node1)
+        d2 = distances(node2)
+        print(d1, d2)
+        argmin = 0
+        impossible = True
+
+        for i in range(len(edges)):
+            if d1[i] < len(edges) * 10 and d2[i] < len(edges) * 10:
+                impossible = False
+
+            if max(d1[i], d2[i]) < max(d1[argmin], d2[argmin]):
+                argmin = i
+
+        if impossible: return -1
+        return argmin
