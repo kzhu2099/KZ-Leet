@@ -2,19 +2,67 @@ from ..Solution import Solution
 
 # class Solution_2025MAYXX(Solution):
 
+class Solution_2025MAY25(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', '2025-05-25')
+
+    def longestPalindrome(self, words):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/longest-palindrome-by-concatenating-two-letter-words/?envType=daily-question&envId=2025-05-25
+
+        :type colors: str
+        :type edges: List[List[int]]
+        :rtype: int
+        '''
+
+        count = {}
+        for word in words:
+            if word in count:
+                count[word] += 1
+            else:
+                count[word] = 1
+
+        length = 0
+        center = False
+
+        for word in list(count.keys()):
+            rev = word[::-1]
+            if word != rev:
+                if rev in count:
+                    pairs = min(count[word], count[rev])
+                    length += pairs * 4
+                    count[word] -= pairs
+                    count[rev] -= pairs
+
+            else:
+                pairs = count[word] // 2
+                length += pairs * 4
+                count[word] -= pairs * 2
+
+                if count[word] > 0: # should be odd
+                    center = True
+
+        if center:
+            length += 2
+
+        return length
+
+    main = longestPalindrome
+
 class Solution_2025MAY26(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', '2025-05-26')
 
     def largestPathValue(self, colors, edges):
-        """
+        '''
         Author: Kevin Zhu
         Link: https://leetcode.com/problems/largest-color-value-in-a-directed-graph/?envType=daily-question&envId=2025-05-26
 
         :type colors: str
         :type edges: List[List[int]]
         :rtype: int
-        """
+        '''
 
         n = len(colors)
 
@@ -55,31 +103,35 @@ class Solution_2025MAY26(Solution):
 
         return max_value if visited == n else -1
 
+    main = largestPathValue
+
 class Solution_2025MAY27(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', '2025-05-27')
 
     def differenceOfSums(self, n, m):
-        """
+        '''
         Author: Kevin Zhu
         Link: https://leetcode.com/problems/divisible-and-non-divisible-sums-difference/?envType=daily-question&envId=2025-05-27
 
         :type n: int
         :type m: int
         :rtype: int
-        """
+        '''
         num = 0
         for i in range(n + 1):
             num += i if i % m != 0 else -i
 
         return num
 
+    main = differenceOfSums
+
 class Solution_2025MAY28(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', '2025-05-28')
 
     def maxTargetNodes(self, edges1, edges2, k):
-        """
+        '''
         Author: Kevin Zhu
         Link: https://leetcode.com/problems/maximize-the-number-of-target-nodes-after-connecting-trees-i/?envType=daily-question&envId=2025-05-28
 
@@ -87,7 +139,7 @@ class Solution_2025MAY28(Solution):
         :type edges2: List[List[int]]
         :type k: int
         :rtype: List[int]
-        """
+        '''
 
         def build_adj(edges):
             nodes = {}
@@ -127,19 +179,19 @@ class Solution_2025MAY28(Solution):
             dfs(node, 0)
             return result
 
-        # Compute max targets in graph2 with k - 1
         max_targets2 = 0
         for node in nodes2:
             reachable = target(node, k - 1, nodes2)
             max_targets2 = max(max_targets2, len(reachable))
 
-        # Compute results for each node in graph1
         result = []
         for node in nodes1:
             reachable1 = target(node, k, nodes1)
             result.append(len(reachable1) + max_targets2)
 
         return result
+
+    main = maxTargetNodes
 
 class Solution_2025MAY29(Solution):
 
@@ -151,7 +203,7 @@ class Solution_2025MAY29(Solution):
     Then, we make the parities of each tree. It determines if it is on the odd or even level.
     We use the current parity and then send the opposite parity to the next level in the DFS.
     Finally, we calculate the maximum number of target nodes based on the parity of each node.
-    The amount of "even" parity nodes is the same as the amount of nodes in Tree 1 with the same parity.
+    The amount of 'even' parity nodes is the same as the amount of nodes in Tree 1 with the same parity.
     Then, it is added to the best possible solution from Tree 2, since we can determine the node connection.
     '''
 
@@ -159,14 +211,14 @@ class Solution_2025MAY29(Solution):
         super().__init__('Kevin Zhu', '2025-05-29')
 
     def maxTargetNodes(self, edges1, edges2):
-        """
+        '''
         Author: Kevin Zhu
         Link: https://leetcode.com/problems/maximize-the-number-of-target-nodes-after-connecting-trees-ii/?envType=daily-question&envId=2025-05-29
 
         :type edges1: List[List[int]]
         :type edges2: List[List[int]]
         :rtype: List[int]
-        """
+        '''
 
         def build_graph(edges, n):
             graph = [[] for _ in range(n)]
@@ -213,25 +265,28 @@ class Solution_2025MAY29(Solution):
 
         return result
 
+    main = maxTargetNodes
+
 class Solution_2025MAY30(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', '2025-05-30')
 
     def closestMeetingNode(self, edges, node1, node2):
-        """
+        '''
         Author: Kevin Zhu
         Link: https://leetcode.com/problems/find-closest-node-to-given-two-nodes/?envType=daily-question&envId=2025-05-30
-        
+
         :type edges: List[int]
         :type node1: int
         :type node2: int
         :rtype: int
-        """
+        '''
 
         def distances(node):
             distance = 0
             v = set()
             r = [len(edges) * 10] * len(edges)
+
             while True:
                 if node in v: break
                 v.add(node)
@@ -244,7 +299,7 @@ class Solution_2025MAY30(Solution):
 
         d1 = distances(node1)
         d2 = distances(node2)
-        print(d1, d2)
+
         argmin = 0
         impossible = True
 
@@ -257,3 +312,5 @@ class Solution_2025MAY30(Solution):
 
         if impossible: return -1
         return argmin
+
+    main = closestMeetingNode
