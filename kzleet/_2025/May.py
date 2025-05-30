@@ -2,6 +2,28 @@ from ..Solution import Solution
 
 # class Solution_2025MAYXX(Solution):
 
+class Solution_2025MAY24(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', '2025-05-24')
+
+    def findWordsContaining(self, words, x):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/find-words-containing-character/?envType=daily-question&envId=2025-05-24
+
+        :type words: List[str]
+        :type x: str
+        :rtype: List[int]
+        '''
+
+        indices = []
+        for i in range(len(words)):
+            if x in words[i]: indices.append(i)
+
+        return indices
+
+    main = findWordsContaining
+
 class Solution_2025MAY25(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', '2025-05-25')
