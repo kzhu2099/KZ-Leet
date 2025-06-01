@@ -1,5 +1,55 @@
 from .Solution import Solution
 
+class Solution_909(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 909, 'Medium')
+
+    def snakesAndLadders(self, board):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/snakes-and-ladders/description/?envType=daily-question&envId=2025-05-31
+
+        :type board: List[List[int]]
+        :rtype: int
+        '''
+
+        flat = []
+        n = len(board)
+        for i in range(n - 1, -1, -1): # provided in reverse
+            row = board[i]
+            if (n - 1 - i) % 2 == 0:
+                flat.extend(row)
+            else:
+                flat.extend(reversed(row))
+
+        queue = [(0, 0)]  # (position, rolls)
+        visited = set([0])
+        front = 0
+
+        n = len(flat)
+        while front < len(queue):
+            pos, rolls = queue[front]
+            front += 1
+
+            if pos == n - 1:
+                return rolls
+
+            for k in range(1, 7):
+                next_pos = pos + k
+                if next_pos >= n:
+                    continue
+
+                if flat[next_pos] != -1:
+                    next_pos = flat[next_pos] - 1 # 0 index
+
+                if next_pos not in visited:
+                    visited.add(next_pos)
+                    queue.append((next_pos, rolls + 1))
+
+        return -1
+
+    main = snakesAndLadders
+
 class Solution_2131(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 2131, 'Medium')
@@ -162,3 +212,51 @@ class Solution_3372(Solution):
         return result
 
     main = maxTargetNodes
+
+class Solution_2929(Solution):
+
+    '''
+    This solution just usees the stars and bars problem.
+    It also includes exclutions for the usage of limit.
+    However, since we multiply by 3, cases like (3, 3, 1) where 3 is over the limit need to be added back in.
+    This is because we subtract for child 1, but child 2 has the same case which we subtract 3 times again.
+    Then, for cases like (3, 3, 3), we need to subtract again since we added it back in.
+    '''
+    
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2929, 'Medium')
+
+    def distributeCandies(self, n, limit):
+            '''
+            Author: Kevin Zhu
+            Link: https://leetcode.com/problems/distribute-candies-among-children-ii/?envType=daily-question&envId=2025-06-01
+
+            :type n: int
+            :type limit: int
+            :rtype: int
+            '''
+
+            def choose(n, k):
+                if k < 0 or k > n:
+                    return 0
+                if k == 0 or k == n:
+                    return 1
+                if k == 1:
+                    return n
+                if k == 2:
+                    return n * (n - 1) // 2
+                return 0
+
+            # Total ways without restrictions
+            total = choose(n + 2, 2)
+
+            # Subtract cases where 1 child exceeds limit
+            over1 = 3 * choose(n - (limit + 1) + 2, 2) if n >= limit + 1 else 0
+
+            # Add back cases where 2 children exceed limit
+            over2 = 3 * choose(n - 2 * (limit + 1) + 2, 2) if n >= 2 * (limit + 1) else 0
+
+            # Subtract cases where all 3 children exceed limit
+            over3 = choose(n - 3 * (limit + 1) + 2, 2) if n >= 3 * (limit + 1) else 0
+
+            return total - over1 + over2 - over3

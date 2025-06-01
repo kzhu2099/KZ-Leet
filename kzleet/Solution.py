@@ -1,3 +1,6 @@
+import inspect
+import textwrap
+
 class Solution(object):
     def __init__(self, author, number, difficulty):
         self.author = author
@@ -5,7 +8,7 @@ class Solution(object):
         self.difficulty = difficulty
 
     def __str__(self):
-        return f'LeetCode Solution for {self.number} by {self.author}. Problem difficulty: {self.difficulty}'
+        return f'LeetCode Solution for {self.number} by {self.author}. Problem difficulty: {self.difficulty}.\n{textwrap.dedent(inspect.getsource(self.main))}'
 
     def main(self, *args):
         '''

@@ -67,8 +67,7 @@ You may look at the problems by importing like so:
 
 `from kzleet import Solution_####` where `####` is the problem number of the problem. They are also sorted by the LeetCode given difficulty in different files.
 
-For months with more than three letters, use the FULL ame (like SEPTEMBER).
-For single digit days add a leading zero (May 09, 2025).
+There may be multiple implementations: just add a letter after (`_A, _B`) for different ones.
 
 ## License
 
