@@ -1,5 +1,37 @@
 from .Solution import Solution
 
+class Solution_135(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 135, 'Hard')
+
+    main = None
+
+    def candy(self, ratings):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/candy/?envType=daily-question&envId=2025-06-02
+
+        :type ratings: List[int]
+        :rtype: int
+        '''
+
+        n = len(ratings)
+        candy = [1] * n
+
+        for i in range(1, n):
+            if ratings[i] > ratings[i - 1]:
+                if candy[i] <= candy[i - 1]:
+                    candy[i] = candy[i - 1] + 1 # in cases like 1, 2, 3 where they are in a row
+
+        for i in reversed(range(n - 1)):
+            if ratings[i] > ratings[i + 1]:
+                if candy[i] <= candy[i + 1]:
+                    candy[i] = max(candy[i], candy[i + 1]) + 1 # if this one is equal to the other or the other is greater than this
+
+        return sum(candy)
+
+    main = candy
+
 class Solution_1857(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 1857, 'Hard')

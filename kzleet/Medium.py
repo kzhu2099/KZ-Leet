@@ -222,7 +222,7 @@ class Solution_2929(Solution):
     This is because we subtract for child 1, but child 2 has the same case which we subtract 3 times again.
     Then, for cases like (3, 3, 3), we need to subtract again since we added it back in.
     '''
-    
+
     def __init__(self):
         super().__init__('Kevin Zhu', 2929, 'Medium')
 
@@ -260,3 +260,5 @@ class Solution_2929(Solution):
             over3 = choose(n - 3 * (limit + 1) + 2, 2) if n >= 3 * (limit + 1) else 0
 
             return total - over1 + over2 - over3
+
+    main = distributeCandies
