@@ -32,6 +32,51 @@ class Solution_135(Solution):
 
     main = candy
 
+class Solution_1298(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 1298, 'Hard')
+
+    main = None
+
+    def maxCandies(self, status, candies, keys, containedBoxes, initialBoxes):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/maximum-candies-you-can-get-from-boxes/?envType=daily-question&envId=2025-06-03
+        
+        :type status: List[int]
+        :type candies: List[int]
+        :type keys: List[List[int]]
+        :type containedBoxes: List[List[int]]
+        :type initialBoxes: List[int]
+        :rtype: int
+        '''
+
+        queue = initialBoxes
+        available = []
+        candy = 0
+        while queue:
+            b = queue.pop(0)
+
+            if status[b] == 1:
+                candy += candies[b]
+            else:
+                available.append(b)
+                continue
+
+            available.extend(containedBoxes[b])
+            for key in keys[b]:
+                status[key] = 1
+
+            for j in available[:]:
+                if status[j] == 1:
+                    if j not in queue:
+                        queue.append(j)
+                    available.remove(j)
+
+        return candy
+
+    main = maxCandies
+
 class Solution_1857(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 1857, 'Hard')
