@@ -146,6 +146,56 @@ class Solution_2359(Solution):
 
     main = closestMeetingNode
 
+class Solution_2929(Solution):
+
+    '''
+    This solution just usees the stars and bars problem.
+    It also includes exclutions for the usage of limit.
+    However, since we multiply by 3, cases like (3, 3, 1) where 3 is over the limit need to be added back in.
+    This is because we subtract for child 1, but child 2 has the same case which we subtract 3 times again.
+    Then, for cases like (3, 3, 3), we need to subtract again since we added it back in.
+    '''
+
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2929, 'Medium')
+
+    def distributeCandies(self, n, limit):
+            '''
+            Author: Kevin Zhu
+            Link: https://leetcode.com/problems/distribute-candies-among-children-ii/?envType=daily-question&envId=2025-06-01
+
+            :type n: int
+            :type limit: int
+            :rtype: int
+            '''
+
+            def choose(n, k):
+                if k < 0 or k > n:
+                    return 0
+                if k == 0 or k == n:
+                    return 1
+                if k == 1:
+                    return n
+                if k == 2:
+                    return n * (n - 1) // 2
+                return 0
+
+            # Total ways without restrictions
+            total = choose(n + 2, 2)
+
+            # Subtract cases where 1 child exceeds limit
+            over1 = 3 * choose(n - (limit + 1) + 2, 2) if n >= limit + 1 else 0
+
+            # Add back cases where 2 children exceed limit
+            over2 = 3 * choose(n - 2 * (limit + 1) + 2, 2) if n >= 2 * (limit + 1) else 0
+
+            # Subtract cases where all 3 children exceed limit
+            over3 = choose(n - 3 * (limit + 1) + 2, 2) if n >= 3 * (limit + 1) else 0
+
+            return total - over1 + over2 - over3
+
+    main = distributeCandies
+
 class Solution_3372(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 3372, 'Medium')
@@ -213,52 +263,33 @@ class Solution_3372(Solution):
 
     main = maxTargetNodes
 
-class Solution_2929(Solution):
-
-    '''
-    This solution just usees the stars and bars problem.
-    It also includes exclutions for the usage of limit.
-    However, since we multiply by 3, cases like (3, 3, 1) where 3 is over the limit need to be added back in.
-    This is because we subtract for child 1, but child 2 has the same case which we subtract 3 times again.
-    Then, for cases like (3, 3, 3), we need to subtract again since we added it back in.
-    '''
-
+class Solution_3403(Solution):
     def __init__(self):
-        super().__init__('Kevin Zhu', 2929, 'Medium')
+        super().__init__('Kevin Zhu', 3403, 'Medium')
 
-    def distributeCandies(self, n, limit):
-            '''
-            Author: Kevin Zhu
-            Link: https://leetcode.com/problems/distribute-candies-among-children-ii/?envType=daily-question&envId=2025-06-01
+    main = None
 
-            :type n: int
-            :type limit: int
-            :rtype: int
-            '''
+    def answerString(self, word, numFriends):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/find-the-lexicographically-largest-string-from-the-box-i/?envType=daily-question&envId=2025-06-04
 
-            def choose(n, k):
-                if k < 0 or k > n:
-                    return 0
-                if k == 0 or k == n:
-                    return 1
-                if k == 1:
-                    return n
-                if k == 2:
-                    return n * (n - 1) // 2
-                return 0
+        :type word: str
+        :type numFriends: int
+        :rtype: str
+        '''
 
-            # Total ways without restrictions
-            total = choose(n + 2, 2)
+        if numFriends == 1: return word
 
-            # Subtract cases where 1 child exceeds limit
-            over1 = 3 * choose(n - (limit + 1) + 2, 2) if n >= limit + 1 else 0
+        max_length = len(word) - numFriends + 1
+        char = max(word)
+        best = ''
 
-            # Add back cases where 2 children exceed limit
-            over2 = 3 * choose(n - 2 * (limit + 1) + 2, 2) if n >= 2 * (limit + 1) else 0
+        for i, c in enumerate(word):
+            if c == char:
+                cand = word[i:i + min(max_length, len(word) - i)]
+                if cand > best: best = cand
 
-            # Subtract cases where all 3 children exceed limit
-            over3 = choose(n - 3 * (limit + 1) + 2, 2) if n >= 3 * (limit + 1) else 0
+        return best
 
-            return total - over1 + over2 - over3
-
-    main = distributeCandies
+    main = answerString
