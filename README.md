@@ -78,3 +78,4 @@ The License is an MIT License found in the LICENSE file.
 This library provides personal / community solutions from LeetCode.
 They are not the Editorial solutions that you find there, and are in no means as good as theirs.
 This is for educational purposes to provide a different perspective on problems.
+also, I will try my best to answer all problems. If I can't, I may ask AI (due to not having time) or it having a significantly improved solution. I will always write if it uses AI.

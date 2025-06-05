@@ -50,6 +50,114 @@ class Solution_909(Solution):
 
     main = snakesAndLadders
 
+class Solution_1061(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 1061, 'Medium')
+
+    main = None
+
+    def smallestEquivalentString(self, s1, s2, baseStr):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/lexicographically-smallest-equivalent-string/?envType=daily-question&envId=2025-06-05
+
+        :type s1: str
+        :type s2: str
+        :type baseStr: str
+        :rtype: str
+        '''
+
+        groups = []
+
+        for a, b in zip(s1, s2):
+            new_group = set([a, b])
+            merged_groups = []
+
+            # intersections
+            for g in groups:
+                if g & new_group:
+                    new_group |= g
+                    merged_groups.append(g)
+
+            for g in merged_groups:
+                groups.remove(g)
+
+            groups.append(new_group)
+
+        small_map = {}
+        result = ''
+        for c in baseStr:
+            if c in small_map.keys():
+                result += small_map[c]
+
+            else:
+                best = c
+                for g in groups:
+                    if c in g:
+                        best = min(min(g), best)
+                        break
+
+                result += best
+                small_map[c] = best
+
+        return result
+
+    main = smallestEquivalentString
+
+class Solution_1061_A(Solution):
+    def __init__(self):
+        super().__init__('ChatGPT', 1061, 'Medium')
+
+    main = None
+
+    def smallestEquivalentString(self, s1, s2, baseStr):
+        '''
+        Author: ChatGPT
+        Link: https://leetcode.com/problems/lexicographically-smallest-equivalent-string/?envType=daily-question&envId=2025-06-05
+
+        :type s1: str
+        :type s2: str
+        :type baseStr: str
+        :rtype: str
+        '''
+
+        groups = []
+
+        for a, b in zip(s1, s2):
+            new_group = set([a, b])
+            merged_groups = []
+
+            # intersections
+            for g in groups:
+                if g & new_group:
+                    new_group |= g
+                    merged_groups.append(g)
+
+            for g in merged_groups:
+                groups.remove(g)
+
+            groups.append(new_group)
+
+        small_map = {}
+        result = ''
+        for c in baseStr:
+            if c in small_map.keys():
+                result += small_map[c]
+
+            else:
+                best = c
+                for g in groups:
+                    if c in g:
+                        best = min(min(g), best)
+                        break
+
+                result += best
+                small_map[c] = best
+
+        return result
+
+    main = smallestEquivalentString
+
 class Solution_2131(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 2131, 'Medium')
