@@ -121,40 +121,28 @@ class Solution_1061_A(Solution):
         :rtype: str
         '''
 
-        groups = []
+        parent = {chr(i): chr(i) for i in range(ord('a'), ord('z') + 1)}
+
+        def find(c): # finds the min since the min --> own parent
+            if parent[c] != c:
+                parent[c] = find(parent[c])
+
+            return parent[c]
+
+        def union(a, b):
+            rootA, rootB = find(a), find(b) # get the min known now
+            if rootA == rootB:
+                return
+
+            if rootA < rootB:
+                parent[rootB] = rootA
+            else:
+                parent[rootA] = rootB
 
         for a, b in zip(s1, s2):
-            new_group = set([a, b])
-            merged_groups = []
+            union(a, b)
 
-            # intersections
-            for g in groups:
-                if g & new_group:
-                    new_group |= g
-                    merged_groups.append(g)
-
-            for g in merged_groups:
-                groups.remove(g)
-
-            groups.append(new_group)
-
-        small_map = {}
-        result = ''
-        for c in baseStr:
-            if c in small_map.keys():
-                result += small_map[c]
-
-            else:
-                best = c
-                for g in groups:
-                    if c in g:
-                        best = min(min(g), best)
-                        break
-
-                result += best
-                small_map[c] = best
-
-        return result
+        return ''.join(find(c) for c in baseStr)
 
     main = smallestEquivalentString
 
