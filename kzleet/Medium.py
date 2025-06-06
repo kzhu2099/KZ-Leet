@@ -242,6 +242,61 @@ class Solution_2359(Solution):
 
     main = closestMeetingNode
 
+class Solution_2434(Solution):
+    '''
+    Plan:
+        - get min pos for every i in s
+        - if s is empty, put reverse(t)
+        - if t is empty, add more s
+        - add the end of t while the end of t <= min(s)
+    '''
+
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2434, 'Medium')
+
+    main = None
+
+    def robotWithString(self, s):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/using-a-robot-to-print-the-lexicographically-smallest-string/?envType=daily-question&envId=2025-06-06
+
+        :type s: str
+        :rtype: str
+        '''
+
+        if len(s) <= 1:
+            return s
+
+        n = len(s)
+        stack = []
+        c = list(s)
+        result = []
+
+        # if at this index there is something smaller afterwards
+        suffixes = [''] * n
+        suffixes[-1] = s[-1]
+        for i in reversed(range(n - 1)):
+            suffixes[i] = min(s[i], suffixes[i + 1])
+
+        i = 0 # tracks the current position in s for the suffixes
+        while i < n or stack:
+            if i < n:
+                stack.append(s[i])
+                i += 1
+
+            if i == n:
+                result.extend(list(reversed(stack)))
+                break
+
+            else:
+                while stack and (i == n or stack[-1] <= suffixes[i]):
+                    result.append(stack.pop())
+
+        return ''.join(result)
+
+    main = robotWithString
+
 class Solution_2929(Solution):
 
     '''
