@@ -347,6 +347,38 @@ class Solution_2929(Solution):
 
     main = distributeCandies
 
+class Solution_2929(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 3170, 'Medium')
+
+    main = None
+
+    def clearStars(self, s):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/lexicographically-minimum-string-after-removing-stars/?envType=daily-question&envId=2025-06-07
+
+        :type s: str
+        :rtype: str
+        '''
+
+        char_indices = [[] for _ in range(26)]  # one list per lowercase letter
+        removals = set()
+
+        for j, c in enumerate(s):
+            if c == '*':
+                for i in range(26):
+                    if char_indices[i]:
+                        index = char_indices[i].pop()
+                        removals |= {index, j} # instead of removal, which changes list indices, just mark as removed
+                        break
+            else:
+                char_indices[ord(c) - ord('a')].append(j)
+
+        return ''.join(s[i] for i in range(len(s)) if i not in removals)
+
+    main = clearStars
+    
 class Solution_3372(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 3372, 'Medium')
