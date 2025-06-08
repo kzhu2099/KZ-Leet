@@ -1,5 +1,70 @@
 from .Solution import Solution
 
+class Solution_386_A(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 386, 'Medium')
+
+    main = None
+
+    def lexicalOrder(self, n):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/lexicographical-numbers/?envType=daily-question&envId=2025-06-08
+
+        :type n: int
+        :rtype: List[int]
+        '''
+
+        result = []
+
+        def s(x):
+            if x > n:
+                return
+
+            result.append(x)
+
+            for i in range(10):
+                a = x * 10 + i # include 0 for 10 --> 100 up to 109
+                if a > n: return # efficiency
+                s(a)
+
+        for i in range(1, 10):
+            s(i)
+
+        return result
+
+    main = lexicalOrder
+
+class Solution_386_B(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 386, 'Medium')
+
+    main = None
+
+    def lexicalOrder(self, n):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/lexicographical-numbers/?envType=daily-question&envId=2025-06-08
+
+        :type n: int
+        :rtype: List[int]
+        '''
+
+        result = []
+
+        def s(x):
+            result.append(x)
+
+            if x * 10 <= n: s(x * 10)
+
+            if x % 10 != 9 and x < n: s(x + 1)
+
+        s(1)
+
+        return result
+
+    main = lexicalOrder
+
 class Solution_909(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 909, 'Medium')
@@ -50,7 +115,7 @@ class Solution_909(Solution):
 
     main = snakesAndLadders
 
-class Solution_1061(Solution):
+class Solution_1061_A(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 1061, 'Medium')
 
@@ -104,7 +169,7 @@ class Solution_1061(Solution):
 
     main = smallestEquivalentString
 
-class Solution_1061_A(Solution):
+class Solution_1061_B(Solution):
     def __init__(self):
         super().__init__('ChatGPT', 1061, 'Medium')
 
@@ -378,7 +443,7 @@ class Solution_2929(Solution):
         return ''.join(s[i] for i in range(len(s)) if i not in removals)
 
     main = clearStars
-    
+
 class Solution_3372(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 3372, 'Medium')
