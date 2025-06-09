@@ -32,6 +32,58 @@ class Solution_135(Solution):
 
     main = candy
 
+class Solution_440(Solution):
+
+    '''
+    Plan: if the we can go from 1 - 2, 11 - 12, do it. If we cannot, then go from 1 - 10, 11 - 110.
+    Either next lexicographical sibling or child.
+    '''
+
+    def __init__(self):
+        super().__init__('Kevin Zhu', 440, 'Hard')
+
+    main = None
+
+    def findKthNumber(self, n, k):
+        '''
+        Author: Kevin zhu
+        Link: https://leetcode.com/problems/k-th-smallest-in-lexicographical-order/?envType=daily-question&envId=2025-06-09
+
+        :type k: int
+        :rtype: int
+        '''
+
+        def count_between(n, f):
+            steps = 0
+            l = f # first, last
+
+            while f <= n:
+                steps += min(l, n) - f + 1 # inclusive + 1
+                f *= 10
+                l *= 10; l += 9
+                # if a was 10 (so steps between 10 and 11) and n was ..., + 1 [10, 10], then [100, 109], then [1000, 1099].
+
+            return steps
+
+        k -= 1
+        c = 1
+
+        while k > 0:
+            steps = count_between(n, c)
+
+            if k < steps: # rooted inside --> ex: the answer is 101, and I am at 10. It is inside this tree.
+                k -= 1
+                c *= 10
+
+            else: # not inside --> ex: the answer is 201, and I am at 1, so it must be inside the '2' tree
+                  # ex2: the answer is 123. I am at 120. If n is a very big number, then between 120 and 121 there is an entire tree ... until I get to 123.
+                k -= steps
+                c += 1
+
+        return c
+
+    main = findKthNumber
+
 class Solution_1298(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 1298, 'Hard')
@@ -42,7 +94,7 @@ class Solution_1298(Solution):
         '''
         Author: Kevin Zhu
         Link: https://leetcode.com/problems/maximum-candies-you-can-get-from-boxes/?envType=daily-question&envId=2025-06-03
-        
+
         :type status: List[int]
         :type candies: List[int]
         :type keys: List[List[int]]
