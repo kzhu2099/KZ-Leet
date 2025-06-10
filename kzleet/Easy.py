@@ -42,3 +42,39 @@ class Solution_2942(Solution):
         return indices
 
     main = findWordsContaining
+
+class Solution_3442(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 3442, 'Easy')
+
+    main = None
+
+    def maxDifference(self, s):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/maximum-difference-between-even-and-odd-frequency-i/description/?envType=daily-question&envId=2025-06-10
+
+        :type s: str
+        :rtype: int
+        '''
+
+        g = [0] * 26
+
+        for c in s: g[ord(c) - ord('a')] += 1
+
+        a1 = 0
+        a2 = len(s)
+
+        for i in g:
+            if i == 0: continue
+
+            if i % 2 == 1 and i > a1:
+                a1 = i
+
+            if i % 2 == 0 and i < a2:
+                a2 = i
+
+        return a1 - a2
+
+    main = maxDifference
+
