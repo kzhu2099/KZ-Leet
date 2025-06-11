@@ -257,3 +257,123 @@ class Solution_3373(Solution):
         return result
 
     main = maxTargetNodes
+
+class Solution_3445(Solution):
+    def __init__(self):
+        super().__init__('Google Gemini', 3445, 'Hard')
+
+    main = None
+
+    def maxDifference(self, s, k):
+        '''
+        Author: Google Gemini --> this one was just too hard!!
+        Link: https://leetcode.com/problems/maximum-difference-between-even-and-odd-frequency-ii/?envType=daily-question&envId=2025-06-11
+
+        :type s: str
+        :type k: int
+        :rtype: int
+
+        Gemini Explanation:
+        Core Idea: Sliding Window with Prefix Sums and State-Based Dynamic Programming
+        The problem involves substrings and their properties, which immediately suggests a sliding window approach.
+        Since we need to calculate frequencies efficiently within these windows, prefix sums are ideal.
+        The tricky part is the parity (odd/even) and minimum value (>= 1) constraints on frequencies, which require a clever way to keep track of previous window start states.
+        This leads to a form of dynamic programming or state compression where we store minimum values for specific "left-side" states.
+
+        gl understanding this one
+        '''
+
+        n = len(s)
+        digits = [str(i) for i in range(5)]
+
+        max_overall_diff = -float('inf')
+
+        for char_a in digits:
+            for char_b in digits:
+                if char_a == char_b:
+                    continue
+
+                prefix_a = [0] * (n + 1)
+                prefix_b = [0] * (n + 1) # for the i + 1
+
+                for i in range(n):
+                    prefix_a[i + 1] = prefix_a[i] + (1 if s[i] == char_a else 0)
+                    prefix_b[i + 1] = prefix_b[i] + (1 if s[i] == char_b else 0)
+
+                min_state_values = [[[ (float('inf'), 0) ] * 3 for _ in range(2)] for _ in range(2)] # it's literally a 3D array in this sort of problem ........
+
+                min_state_values[0][0][0] = (0, 0)
+
+                current_pair_max_diff = -float('inf')
+
+                for right in range(n):
+                    # 1. Update `min_state_values` with the new 'L' candidate that becomes valid
+                    # The new `L` candidate is `right - k + 1`. This `L` represents `s[L]` as the start of a window.
+                    # This update must happen *before* we try to use this `L` for the current `right` pointer.
+                    # It becomes valid for forming windows of length >= k.
+
+                    l_candidate_idx = right - k + 1
+                    if l_candidate_idx >= 0: # Ensure L is a valid index for prefix sums
+                        current_pa_L = prefix_a[l_candidate_idx]
+                        current_pb_L = prefix_b[l_candidate_idx]
+
+                        pa_L_parity = current_pa_L % 2
+                        pb_L_parity = current_pb_L % 2
+
+                        pb_L_cat = 0
+                        if current_pb_L == 1:
+                            pb_L_cat = 1
+                        elif current_pb_L >= 2:
+                            pb_L_cat = 2
+
+                        val_to_store = (current_pa_L - current_pb_L, current_pb_L)
+
+                        # Update if this `val_to_store` has a smaller (P_A[L] - P_B[L])
+                        # The tuple comparison `min((a,b), (c,d))` in Python compares `a` vs `c` first, then `b` vs `d`.
+                        # This works correctly for minimizing the first element.
+                        min_state_values[pa_L_parity][pb_L_parity][pb_L_cat] = \
+                            min(min_state_values[pa_L_parity][pb_L_parity][pb_L_cat], val_to_store)
+
+                    # 2. Process the current window ending at `right`
+                    # We only consider windows of length at least `k`.
+                    if right + 1 < k:
+                        continue
+
+                    current_pa_R = prefix_a[right+1]
+                    current_pb_R = prefix_b[right+1]
+
+                    # Determine the required parities for `P_A[L]` and `P_B[L]`
+                    # so that freq(a) is odd and freq(b) is even in the substring.
+                    req_pa_L_parity = (current_pa_R % 2) ^ 1 # If P_A[R+1] is odd, P_A[L] must be even. If even, P_A[L] must be odd.
+                    req_pb_L_parity = current_pb_R % 2      # If P_B[R+1] is odd, P_B[L] must be odd. If even, P_B[L] must be even.
+
+                    # Iterate through all 3 possible `pb_L_value_category` states (0, 1, or >=2)
+                    # to find the `L` that minimizes (P_A[L] - P_B[L]) and satisfies conditions.
+                    for pb_L_cat in range(3):
+
+                        min_tuple = min_state_values[req_pa_L_parity][req_pb_L_parity][pb_L_cat]
+                        min_diff_val_L = min_tuple[0]
+                        corresponding_pb_L = min_tuple[1]
+
+                        if min_diff_val_L == float('inf'):
+                            continue # No valid `L` found yet for this specific state.
+
+                        # Reconstruct freq(a) and freq(b) for the substring s[L...right]
+                        # P_A[L] = (P_A[L] - P_B[L]) + P_B[L] = min_diff_val_L + corresponding_pb_L
+                        freq_a_substring = current_pa_R - (min_diff_val_L + corresponding_pb_L)
+                        freq_b_substring = current_pb_R - corresponding_pb_L
+
+                        # Final check: `freq(b)` must be at least 2.
+                        # Parity checks are implicitly handled by selecting `req_pa_L_parity` and `req_pb_L_parity`.
+                        if freq_b_substring >= 2:
+                            # This is a valid substring. Update the max difference for the current (a, b) pair.
+                            current_pair_max_diff = max(current_pair_max_diff, freq_a_substring - freq_b_substring)
+
+                # After iterating through all 'right' for the current (a, b) pair, update the overall max.
+                max_overall_diff = max(max_overall_diff, current_pair_max_diff)
+
+        # According to the problem statement, a valid substring always exists.
+        # So `max_overall_diff` should not remain -inf.
+        return max_overall_diff
+
+    main = maxDifference
