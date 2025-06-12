@@ -43,6 +43,30 @@ class Solution_2942(Solution):
 
     main = findWordsContaining
 
+class Solution_3423(Solution):
+
+    '''
+    Thank you LeetCode for an easy problem today! (especially after yesterday...)
+    '''
+
+    def __init__(self):
+        super().__init__('Kevin Zhu', 3423, 'Easy')
+
+    main = None
+
+    def maxAdjacentDistance(self, nums):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/maximum-difference-between-adjacent-elements-in-a-circular-array/?envType=daily-question&envId=2025-06-12
+
+        :type nums: List[int]
+        :rtype: int
+        '''
+
+        nums.append(nums[0])
+        diff = [abs(nums[i + 1] - nums[i]) for i in range(len(nums)) if i < len(nums) - 1]
+        return max(diff)
+
 class Solution_3442(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 3442, 'Easy')
