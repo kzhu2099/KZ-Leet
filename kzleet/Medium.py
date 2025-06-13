@@ -362,6 +362,66 @@ class Solution_2434(Solution):
 
     main = robotWithString
 
+class Solution_2616(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2616, 'Medium')
+
+    main = None
+
+    def minimizeMax(self, nums, p):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/minimize-the-maximum-difference-of-pairs/?envType=daily-question&envId=2025-06-13
+
+        :type nums: List[int]
+        :type p: int
+        :rtype: int
+        '''
+
+        nums = sorted(nums)
+        n = len(nums)
+
+        # Edge case: if p is 0, no pairs needed, so difference is 0
+        if p == 0:
+            return 0
+
+        # smallest diff is 0, largest diff is the max - min
+        left = 0
+        right = nums[-1] - nums[0]
+        ans = right # start with largeest diff
+
+        # Helper function to check if we can form 'p' pairs with max_diff
+        def can_form_pairs(max_diff):
+            count, i = 0, 0
+
+            while i < n - 1: # the reason why we can just loop through like this is because if it doesn't work, any deviation from the sort will be less efficient
+                if nums[i + 1] - nums[i] <= max_diff:
+                    count += 1
+                    i += 2 # skip used
+
+                else:
+                    i += 1
+
+                if count >= p:
+                    return True
+
+            return False
+
+        # Binary search, more efficient than just going through all possible min-max differences
+        while left <= right:
+            mid = left + (right - left) // 2
+
+            if can_form_pairs(mid):
+                ans = mid # lhs of mid
+                right = mid - 1
+
+            else:
+                left = mid + 1 # rhs of mid
+
+        return ans
+
+    main = minimizeMax
+
 class Solution_2929(Solution):
 
     '''
