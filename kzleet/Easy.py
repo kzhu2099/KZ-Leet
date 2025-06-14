@@ -1,5 +1,37 @@
 from .Solution import Solution
 
+class Solution_2566(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2566, 'Easy')
+
+    main = None
+
+    def minMaxDifference(self, num):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/maximum-difference-by-remapping-a-digit/?envType=daily-question&envId=2025-06-14
+
+        :type num: int
+        :rtype: int
+        '''
+
+        a = str(num)
+        b = str(num)
+
+        for c in a:
+            if int(c) < 9:
+                a = a.replace(c, '9')
+                break
+
+        for c in b:
+            if int(c) > 0:
+                b = b.replace(c, '0')
+                break
+
+        return abs(int(a) - int(b))
+
+    main = minMaxDifference
+
 class Solution_2894(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 2894, 'Easy')
