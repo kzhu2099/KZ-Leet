@@ -211,6 +211,44 @@ class Solution_1061_B(Solution):
 
     main = smallestEquivalentString
 
+class Solution_1432(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 1432, 'Medium')
+
+    main = None
+
+    def maxDiff(self, num):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/max-difference-you-can-get-from-changing-an-integer/?envType=daily-question&envId=2025-06-15
+        
+        :type num: int
+        :rtype: int
+        '''
+
+        a = str(num)
+        b = str(num)
+
+        for c in a:
+            if int(c) < 9:
+                a = a.replace(c, '9')
+                break
+
+        first = b[0]
+        for c in b:
+            if c == first:
+                if int(c) > 1:
+                    b = b.replace(c, '1')
+                    break
+            else:
+                if int(c) > 0:
+                    b = b.replace(c, '0')
+                    break
+
+        return abs(int(a) - int(b))
+
+    main = maxDiff
+
 class Solution_2131(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 2131, 'Medium')
