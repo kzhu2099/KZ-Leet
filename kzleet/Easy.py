@@ -1,5 +1,57 @@
 from .Solution import Solution
 
+class Solution_2016_A(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2016, 'Easy')
+
+    main = None
+
+    def maximumDifference(self, nums):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/maximum-difference-between-increasing-elements/?envType=daily-question&envId=2025-06-16
+
+        :type nums: List[int]
+        :rtype: int
+        '''
+
+        max_diff = -1
+        for i in range(1, len(nums)):
+            max_diff = max(nums[i] - min(nums[:i]), max_diff)
+
+        return max_diff if max_diff > 0 else -1
+
+    main = maximumDifference
+
+class Solution_2016_B(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2016, 'Easy')
+
+    main = None
+
+    def maximumDifference(self, nums):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/maximum-difference-between-increasing-elements/?envType=daily-question&envId=2025-06-16
+
+        :type nums: List[int]
+        :rtype: int
+        '''
+
+        max_diff = -1
+        min_val = nums[0]
+
+        for i in range(1, len(nums)):
+            if nums[i] > min_val:
+                max_diff = max(max_diff, nums[i] - min_val)
+
+            else:
+                min_val = nums[i]
+
+        return max_diff if max_diff > 0 else -1
+
+    main = maximumDifference
+
 class Solution_2566(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 2566, 'Easy')
