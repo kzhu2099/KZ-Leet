@@ -258,6 +258,120 @@ class Solution_3373(Solution):
 
     main = maxTargetNodes
 
+MOD = 10 ** 9 + 7
+MAX_N = 10 ** 5
+
+fact = [1] * MAX_N
+inv_fact = [1] * MAX_N
+_precomputed = False
+
+def _power(base, exp):
+    res = 1
+    base %= MOD
+    while exp > 0:
+        if exp % 2 == 1:
+            res = (res * base) % MOD
+        base = (base * base) % MOD
+        exp //= 2
+    return res
+
+def _nCr_mod_p(n_val, r_val):
+    global _precomputed
+    if not _precomputed:
+        for i in range(1, MAX_N):
+            fact[i] = (fact[i-1] * i) % MOD
+
+        inv_fact[MAX_N - 1] = _power(fact[MAX_N - 1], MOD - 2)
+
+        for i in range(MAX_N - 2, -1, -1):
+            inv_fact[i] = (inv_fact[i+1] * (i+1)) % MOD
+
+        _precomputed = True
+
+    if r_val < 0 or r_val > n_val:
+        return 0
+    if r_val == 0 or r_val == n_val:
+        return 1
+
+    numerator = fact[n_val]
+    denominator = (inv_fact[r_val] * inv_fact[n_val - r_val]) % MOD
+    return (numerator * denominator) % MOD
+
+class Solution_3405:
+    def __init__(self):
+        super().__init__('Google Gemini / Kevin Zhu', 3405, 'Hard')
+
+    main = None
+
+    def countGoodArrays(self, n, m, k):
+        '''
+        Extra Functions
+
+        MOD = 10 ** 9 + 7
+        MAX_N = 10 ** 5
+
+        fact = [1] * MAX_N
+        inv_fact = [1] * MAX_N
+        _precomputed = False
+
+        def _power(base, exp):
+            res = 1
+            base %= MOD
+            while exp > 0:
+                if exp % 2 == 1:
+                    res = (res * base) % MOD
+                base = (base * base) % MOD
+                exp //= 2
+            return res
+
+        def _nCr_mod_p(n_val, r_val):
+            global _precomputed
+            if not _precomputed:
+                for i in range(1, MAX_N):
+                    fact[i] = (fact[i-1] * i) % MOD
+
+                inv_fact[MAX_N - 1] = _power(fact[MAX_N - 1], MOD - 2)
+
+                for i in range(MAX_N - 2, -1, -1):
+                    inv_fact[i] = (inv_fact[i+1] * (i+1)) % MOD
+
+                _precomputed = True
+
+            if r_val < 0 or r_val > n_val:
+                return 0
+            if r_val == 0 or r_val == n_val:
+                return 1
+
+            numerator = fact[n_val]
+            denominator = (inv_fact[r_val] * inv_fact[n_val - r_val]) % MOD
+            return (numerator * denominator) % MOD
+        '''
+
+        '''
+        Author: Kevin Zhu, used Google Gemini
+        Link: https://leetcode.com/problems/count-the-number-of-arrays-with-k-matching-adjacent-elements/?envType=daily-question&envId=2025-06-17
+
+        :type n: int
+        :type m: int
+        :type k: int
+        :rtype: int
+        '''
+
+        if m == 1:
+            return 1 if k == n - 1 else 0
+
+        combinations = _nCr_mod_p(n - 1, k)
+        first_element_choices = m
+        non_matching_count = (n - 1) - k
+        non_matching_choices = _power(m - 1, non_matching_count)
+
+        ans = (combinations * first_element_choices) % MOD
+        ans = (ans * non_matching_choices) % MOD
+
+        return ans
+
+    main = countGoodArrays
+    
 class Solution_3445(Solution):
     def __init__(self):
         super().__init__('Google Gemini', 3445, 'Hard')
@@ -278,7 +392,7 @@ class Solution_3445(Solution):
         The problem involves substrings and their properties, which immediately suggests a sliding window approach.
         Since we need to calculate frequencies efficiently within these windows, prefix sums are ideal.
         The tricky part is the parity (odd/even) and minimum value (>= 1) constraints on frequencies, which require a clever way to keep track of previous window start states.
-        This leads to a form of dynamic programming or state compression where we store minimum values for specific "left-side" states.
+        This leads to a form of dynamic programming or state compression where we store minimum values for specific 'left-side' states.
 
         gl understanding this one
         '''
