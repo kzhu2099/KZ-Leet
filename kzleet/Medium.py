@@ -221,7 +221,7 @@ class Solution_1432(Solution):
         '''
         Author: Kevin Zhu
         Link: https://leetcode.com/problems/max-difference-you-can-get-from-changing-an-integer/?envType=daily-question&envId=2025-06-15
-        
+
         :type num: int
         :rtype: int
         '''
@@ -461,19 +461,18 @@ class Solution_2616(Solution):
     main = minimizeMax
 
 class Solution_2929(Solution):
-
-    '''
-    This solution just usees the stars and bars problem.
-    It also includes exclutions for the usage of limit.
-    However, since we multiply by 3, cases like (3, 3, 1) where 3 is over the limit need to be added back in.
-    This is because we subtract for child 1, but child 2 has the same case which we subtract 3 times again.
-    Then, for cases like (3, 3, 3), we need to subtract again since we added it back in.
-    '''
-
     def __init__(self):
         super().__init__('Kevin Zhu', 2929, 'Medium')
 
     def distributeCandies(self, n, limit):
+            '''
+            This solution just usees the stars and bars problem.
+            It also includes exclutions for the usage of limit.
+            However, since we multiply by 3, cases like (3, 3, 1) where 3 is over the limit need to be added back in.
+            This is because we subtract for child 1, but child 2 has the same case which we subtract 3 times again.
+            Then, for cases like (3, 3, 3), we need to subtract again since we added it back in.
+            '''
+
             '''
             Author: Kevin Zhu
             Link: https://leetcode.com/problems/distribute-candies-among-children-ii/?envType=daily-question&envId=2025-06-01
@@ -510,7 +509,35 @@ class Solution_2929(Solution):
 
     main = distributeCandies
 
-class Solution_2929(Solution):
+class Solution_2966(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2966, 'Medium')
+
+    main = None
+
+    def divideArray(self, nums, k):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/divide-array-into-arrays-with-max-difference/description/?envType=daily-question&envId=2025-06-18
+
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[List[int]]
+        '''
+
+        nums.sort()
+        result = []
+        for i in range(0, len(nums), 3):
+            if nums[i + 2] - nums[i] > k:
+                return []
+
+            result.append([nums[i], nums[i + 1], nums[i + 2]])
+
+        return result
+
+    main = divideArray
+
+class Solution_3170(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 3170, 'Medium')
 
