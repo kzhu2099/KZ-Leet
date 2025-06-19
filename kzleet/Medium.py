@@ -297,6 +297,64 @@ class Solution_2131(Solution):
 
     main = longestPalindrome
 
+class Solution_2294_A(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2294, 'Medium')
+
+    main = None
+
+    def partitionArray(self, nums, k):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/partition-array-such-that-maximum-difference-is-k/?envType=daily-question&envId=2025-06-19
+
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        '''
+
+        nums.sort()
+        result = [[nums.pop(0)]]
+
+        for i in nums:
+            if i - result[-1][0] > k:
+                result.append([i])
+
+            else:
+                result[-1].append(i)
+
+        return(len(result))
+
+    main = partitionArray
+
+class Solution_2294_B(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2294, 'Medium')
+
+    main = None
+
+    def partitionArray(self, nums, k):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/partition-array-such-that-maximum-difference-is-k/?envType=daily-question&envId=2025-06-19
+
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        '''
+
+        nums.sort()
+        m, count = nums[0], 1
+
+        for n in nums:
+            if n - m > k: # you will want to fit as many as possible until you can't
+                m = n
+                count += 1
+
+        return count
+
+    main = partitionArray
+
 class Solution_2359(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 2359, 'Medium')
