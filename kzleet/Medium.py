@@ -627,6 +627,57 @@ class Solution_3170(Solution):
 
     main = clearStars
 
+class Solution_3443(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 3443, 'Medium')
+
+    main = None
+
+    def maxDistance(self, s, k):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/maximum-manhattan-distance-after-k-changes/?envType=daily-question&envId=2025-06-20
+        
+        :type s: str
+        :type k: int
+        :rtype: int
+        '''
+
+        max_d = 0
+
+        dirs = [('N', 'E'), ('N', 'W')] # the opposites are S W and S E, so all are taken
+
+        for d1, d2 in dirs:
+            c_max, c_min = 0, 0
+            rku, rkd = k, k
+
+            for c in s:
+                if c == d1 or c == d2: # this improves efficiency by checking + and - at the same time
+                    c_max += 1
+
+                    if rkd > 0:
+                        c_min += 1
+                        rkd -= 1
+
+                    else:
+                        c_min -= 1
+
+                else:
+                    c_min += 1
+
+                    if rku > 0:
+                        c_max += 1
+                        rku -= 1
+
+                    else:
+                        c_max -= 1
+
+                max_d = max(max_d, c_max, c_min)
+
+        return max_d
+
+    main = maxDistance
+
 class Solution_3372(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 3372, 'Medium')
