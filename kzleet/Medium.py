@@ -595,6 +595,48 @@ class Solution_2966(Solution):
 
     main = divideArray
 
+class Solution_3085(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 3085, 'Medium')
+
+    main = None
+
+    def minimumDeletions(self, word, k):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/minimum-deletions-to-make-string-k-special/?envType=daily-question&envId=2025-06-21
+
+        :type word: str
+        :type k: int
+        :rtype: int
+        '''
+
+        freqs = {}
+        for c in word:
+            if c in freqs:
+                freqs[c] += 1
+
+            else:
+                freqs[c] = 1
+
+        freqs = freqs.values()
+        min_d = sum(freqs)
+
+        for t in set(freqs):
+            d = 0
+            for f in freqs:
+                if f < t:
+                    d += f
+
+                elif f > t + k:
+                    d += f - (t + k)
+
+            min_d = min(min_d, d)
+
+        return min_d
+
+    main = minimumDeletions
+
 class Solution_3170(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 3170, 'Medium')
@@ -637,7 +679,7 @@ class Solution_3443(Solution):
         '''
         Author: Kevin Zhu
         Link: https://leetcode.com/problems/maximum-manhattan-distance-after-k-changes/?envType=daily-question&envId=2025-06-20
-        
+
         :type s: str
         :type k: int
         :rtype: int
