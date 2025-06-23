@@ -52,6 +52,32 @@ class Solution_2016_B(Solution):
 
     main = maximumDifference
 
+class Solution_2138(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2138, 'Easy')
+
+    main = None
+
+    def divideString(self, s, k, fill):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/divide-a-string-into-groups-of-size-k/?envType=daily-question&envId=2025-06-22
+        
+        :type s: str
+        :type k: int
+        :type fill: str
+        :rtype: List[str]
+        '''
+
+        s += fill * ((k - len(s) % k) % k)
+        result = []
+        for i in range(0, len(s), k):
+            result.append(s[i: i + k])
+
+        return result
+
+    main = divideString
+
 class Solution_2566(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 2566, 'Easy')
