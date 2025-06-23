@@ -223,7 +223,7 @@ class Solution_2081(Solution):
 
                 if prefix_num[odd] == total[odd]:
                     total[odd] *= base
-                    odd ^= 1 # shift right
+                    odd = (odd + 1) % 2 # switch odd
 
                 yield x
 
