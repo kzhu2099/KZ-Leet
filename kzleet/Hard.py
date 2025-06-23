@@ -133,6 +133,8 @@ class Solution_1857(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 1857, 'Hard')
 
+    main = None
+
     def largestPathValue(self, colors, edges):
         '''
         Author: Kevin Zhu
@@ -183,6 +185,64 @@ class Solution_1857(Solution):
         return max_value if visited == n else -1
 
     main = largestPathValue
+
+class Solution_2081(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2081, 'Hard')
+
+    main = None
+
+    def kMirror(self, k, n):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/sum-of-k-mirror-numbers/?envType=daily-question&envId=2025-06-23
+
+        :type k: int
+        :type n: int
+        :rtype: int
+        '''
+
+        def mirror(n, base, odd):
+            result = n
+            if odd:
+                n //= base # remove last digit
+
+            while n:
+                result = result * base + n % base
+                n //= base
+
+            return result
+
+        def generate(base): # generate palindrome, not a set amount --> yield
+            prefix_num, total = [1] * 2, [base] * 2
+            odd = 1
+
+            while True:
+                x = mirror(prefix_num[odd], base, odd)
+                prefix_num[odd] += 1
+
+                if prefix_num[odd] == total[odd]:
+                    total[odd] *= base
+                    odd ^= 1 # shift right
+
+                yield x
+
+        def find_k_mirror_number(gen_base_k_palindromes):
+            while True:
+                candidate_num = next(gen_base_k_palindromes) # this number is already a palindrome in base k, and it is a base 10 integer
+
+                s_candidate = str(candidate_num)
+
+                if s_candidate == s_candidate[::-1]:
+                    return candidate_num
+
+        base1 = k
+        base2 = 10
+
+        gen_k_palindromes = generate(base1)
+        return sum(find_k_mirror_number(gen_k_palindromes) for _ in range(n))
+
+    main = kMirror
 
 class Solution_3373(Solution):
 
@@ -371,7 +431,7 @@ class Solution_3405:
         return ans
 
     main = countGoodArrays
-    
+
 class Solution_3445(Solution):
     def __init__(self):
         super().__init__('Google Gemini', 3445, 'Hard')
