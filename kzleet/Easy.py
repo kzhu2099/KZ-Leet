@@ -62,7 +62,7 @@ class Solution_2138(Solution):
         '''
         Author: Kevin Zhu
         Link: https://leetcode.com/problems/divide-a-string-into-groups-of-size-k/?envType=daily-question&envId=2025-06-22
-        
+
         :type s: str
         :type k: int
         :type fill: str
@@ -77,6 +77,31 @@ class Solution_2138(Solution):
         return result
 
     main = divideString
+
+class Solution_2200(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2200, 'Easy')
+
+    main = None
+
+    def findKDistantIndices(self, nums, key, k):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/find-all-k-distant-indices-in-an-array/?envType=daily-question&envId=2025-06-24
+
+        :type nums: List[int]
+        :type key: int
+        :type k: int
+        :rtype: List[int]
+        '''
+
+        keys = set([i for i in range(len(nums)) if nums[i] == key])
+        for _k in keys.copy():
+            keys |= set(range(max(_k - k, 0), min(_k + k, len(nums) - 1) + 1))
+
+        return sorted(list(keys))
+
+    main = findKDistantIndices
 
 class Solution_2566(Solution):
     def __init__(self):
