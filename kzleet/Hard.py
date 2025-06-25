@@ -198,21 +198,21 @@ class Solution_2040(Solution):
         '''
         Author: Kevin Zhu
         Link: https://leetcode.com/problems/kth-smallest-product-of-two-sorted-arrays/?envType=daily-question&envId=2025-06-25
-        
+
         :type nums1: List[int]
         :type nums2: List[int]
         :type k: int
         :rtype: int
         '''
 
-        def count_leq(x):
+        def leq(x):
             count = 0
-            for a in nums1:
-                if a > 0:
-                    count += bisect.bisect_right(nums2, x // a)
+            for i in nums1: # apply to each one: nums1[i] * nums2[...]
+                if i > 0:
+                    count += bisect.bisect_right(nums2, x // i)
 
-                elif a < 0:
-                    count += len(nums2) - bisect.bisect_left(nums2, -(-x // a))
+                elif i < 0:
+                    count += len(nums2) - bisect.bisect_left(nums2, -(-x // i))
 
                 else:  # a == 0 --> 0 * array = [0] * len(array)
                     if x >= 0:
@@ -223,12 +223,12 @@ class Solution_2040(Solution):
         if len(nums1) > len(nums2): # nums1 is on the outside
             nums1, nums2 = nums2, nums1
 
-        left, right = -10 ** 10, 10 ** 10
+        left, right = -10 ** 10, 10 ** 10 # max value
 
-        while left < right: # binary search
+        while left < right: # binary search until left == right --> no more range of answers
             mid = (left + right) // 2
 
-            if count_leq(mid) >= k:
+            if leq(mid) >= k:
                 right = mid
 
             else:
