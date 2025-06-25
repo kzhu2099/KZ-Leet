@@ -186,6 +186,58 @@ class Solution_1857(Solution):
 
     main = largestPathValue
 
+class Solution_2040(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2040, 'Hard')
+
+    main = None
+
+    def kthSmallestProduct(self, nums1, nums2, k):
+        import bisect
+
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/kth-smallest-product-of-two-sorted-arrays/?envType=daily-question&envId=2025-06-25
+        
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :type k: int
+        :rtype: int
+        '''
+
+        def count_leq(x):
+            count = 0
+            for a in nums1:
+                if a > 0:
+                    count += bisect.bisect_right(nums2, x // a)
+
+                elif a < 0:
+                    count += len(nums2) - bisect.bisect_left(nums2, -(-x // a))
+
+                else:  # a == 0 --> 0 * array = [0] * len(array)
+                    if x >= 0:
+                        count += len(nums2)
+
+            return count
+
+        if len(nums1) > len(nums2): # nums1 is on the outside
+            nums1, nums2 = nums2, nums1
+
+        left, right = -10 ** 10, 10 ** 10
+
+        while left < right: # binary search
+            mid = (left + right) // 2
+
+            if count_leq(mid) >= k:
+                right = mid
+
+            else:
+                left = mid + 1
+
+        return left
+
+    main = kthSmallestProduct
+
 class Solution_2081(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 2081, 'Hard')
