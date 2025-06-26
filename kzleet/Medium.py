@@ -69,6 +69,8 @@ class Solution_909(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 909, 'Medium')
 
+    main = None
+    
     def snakesAndLadders(self, board):
         '''
         Author: Kevin Zhu
@@ -253,6 +255,8 @@ class Solution_2131(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 2131, 'Medium')
 
+    main = None
+
     def longestPalindrome(self, words):
         '''
         Author: Kevin Zhu
@@ -267,6 +271,7 @@ class Solution_2131(Solution):
         for word in words:
             if word in count:
                 count[word] += 1
+
             else:
                 count[word] = 1
 
@@ -355,9 +360,52 @@ class Solution_2294_B(Solution):
 
     main = partitionArray
 
+class Solution_2311(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2311, 'Medium')
+
+    main = None
+
+    def longestSubsequence(self, s, k):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/longest-binary-subsequence-less-than-or-equal-to-k/?envType=daily-question&envId=2025-06-26
+
+        :type s: str
+        :type k: int
+        :rtype: int
+        '''
+
+        val = 0
+        power = 1 # current value of the one that is added
+        length = 0
+
+        for i in reversed(range(len(s))):
+            if s[i] == '0':
+                length += 1
+
+            elif power + val <= k:
+                length += 1
+                val += power
+
+            power *= 2
+
+            if power > k: # cannot add anymore ones
+                break
+
+        for j in reversed(range(i)):
+            if s[j] == '0':
+                length += 1
+
+        return length
+
+    main = longestSubsequence
+
 class Solution_2359(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 2359, 'Medium')
+
+    main = None
 
     def closestMeetingNode(self, edges, node1, node2):
         '''
@@ -521,6 +569,8 @@ class Solution_2616(Solution):
 class Solution_2929(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 2929, 'Medium')
+
+    main = None
 
     def distributeCandies(self, n, limit):
             '''
@@ -723,6 +773,8 @@ class Solution_3443(Solution):
 class Solution_3372(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 3372, 'Medium')
+
+    main = None
 
     def maxTargetNodes(self, edges1, edges2, k):
         '''

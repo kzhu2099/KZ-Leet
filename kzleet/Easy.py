@@ -139,6 +139,8 @@ class Solution_2894(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 2894, 'Easy')
 
+    main = None
+
     def differenceOfSums(self, n, m):
         '''
         Author: Kevin Zhu
@@ -160,6 +162,8 @@ class Solution_2942(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 2942, 'Easy')
 
+    main = None
+
     def findWordsContaining(self, words, x):
         '''
         Author: Kevin Zhu
@@ -179,11 +183,6 @@ class Solution_2942(Solution):
     main = findWordsContaining
 
 class Solution_3423(Solution):
-
-    '''
-    Thank you LeetCode for an easy problem today! (especially after yesterday...)
-    '''
-
     def __init__(self):
         super().__init__('Kevin Zhu', 3423, 'Easy')
 
@@ -200,7 +199,10 @@ class Solution_3423(Solution):
 
         nums.append(nums[0])
         diff = [abs(nums[i + 1] - nums[i]) for i in range(len(nums)) if i < len(nums) - 1]
+
         return max(diff)
+
+    main = maxAdjacentDistance
 
 class Solution_3442(Solution):
     def __init__(self):
@@ -236,4 +238,3 @@ class Solution_3442(Solution):
         return a1 - a2
 
     main = maxDifference
-

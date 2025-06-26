@@ -33,18 +33,17 @@ class Solution_135(Solution):
     main = candy
 
 class Solution_440(Solution):
-
-    '''
-    Plan: if the we can go from 1 - 2, 11 - 12, do it. If we cannot, then go from 1 - 10, 11 - 110.
-    Either next lexicographical sibling or child.
-    '''
-
     def __init__(self):
         super().__init__('Kevin Zhu', 440, 'Hard')
 
     main = None
 
     def findKthNumber(self, n, k):
+        '''
+        Plan: if the we can go from 1 - 2, 11 - 12, do it. If we cannot, then go from 1 - 10, 11 - 110.
+        Either next lexicographical sibling or child.
+        '''
+
         '''
         Author: Kevin zhu
         Link: https://leetcode.com/problems/k-th-smallest-in-lexicographical-order/?envType=daily-question&envId=2025-06-09
@@ -289,7 +288,6 @@ class Solution_2081(Solution):
                     return candidate_num
 
         base1 = k
-        base2 = 10
 
         gen_k_palindromes = generate(base1)
         return sum(find_k_mirror_number(gen_k_palindromes) for _ in range(n))
@@ -297,23 +295,24 @@ class Solution_2081(Solution):
     main = kMirror
 
 class Solution_3373(Solution):
-
-    '''
-    Explanation for the solution:
-
-    First, a graph is built from the edges provided for both trees.
-    The graph is represented as an adjacency list (similar to 28th).
-    Then, we make the parities of each tree. It determines if it is on the odd or even level.
-    We use the current parity and then send the opposite parity to the next level in the DFS.
-    Finally, we calculate the maximum number of target nodes based on the parity of each node.
-    The amount of 'even' parity nodes is the same as the amount of nodes in Tree 1 with the same parity.
-    Then, it is added to the best possible solution from Tree 2, since we can determine the node connection.
-    '''
-
     def __init__(self):
         super().__init__('Kevin Zhu', 3373, 'Hard')
 
+    main = None
+
     def maxTargetNodes(self, edges1, edges2):
+        '''
+        Explanation for the solution:
+
+        First, a graph is built from the edges provided for both trees.
+        The graph is represented as an adjacency list (similar to 28th).
+        Then, we make the parities of each tree. It determines if it is on the odd or even level.
+        We use the current parity and then send the opposite parity to the next level in the DFS.
+        Finally, we calculate the maximum number of target nodes based on the parity of each node.
+        The amount of 'even' parity nodes is the same as the amount of nodes in Tree 1 with the same parity.
+        Then, it is added to the best possible solution from Tree 2, since we can determine the node connection.
+        '''
+
         '''
         Author: Kevin Zhu
         Link: https://leetcode.com/problems/maximize-the-number-of-target-nodes-after-connecting-trees-ii/?envType=daily-question&envId=2025-05-29
