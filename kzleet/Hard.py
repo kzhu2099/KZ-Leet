@@ -185,6 +185,88 @@ class Solution_1857(Solution):
 
     main = largestPathValue
 
+class Solution_2014(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2014, 'Hard')
+
+    main = None
+
+    def longestSubsequenceRepeatedK(self, s, k):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/longest-subsequence-repeated-k-times/?envType=daily-question&envId=2025-06-27
+
+        :type s: str
+        :type k: int
+        :rtype: str
+        '''
+
+        n = len(s)
+
+        # precompute next position of the character
+        next_position = [[-1] * 26 for _ in range(n + 1)]
+        for i in reversed(range(n)):
+            for c in range(26):
+                next_position[i][c] = next_position[i + 1][c]
+
+            next_position[i][ord(s[i]) - ord('a')] = i
+
+        def is_valid(pattern, start_index, repetitions_needed):
+            if not pattern:
+                return True
+
+            l = len(pattern)
+            _i = start_index
+            found = 0
+
+            while found < repetitions_needed:
+                pattern_index = 0
+                temp_index = _i
+
+                while pattern_index < l:
+                    char_index = ord(pattern[pattern_index]) - ord('a')
+                    next_idx = next_position[temp_index][char_index] # continue down the array for the next index of the pattern
+
+                    if next_idx == -1:
+                        return False
+
+                    temp_index = next_idx + 1
+                    pattern_index += 1
+
+                found += 1
+                _i = temp_index
+
+            return True
+
+        result = ''
+        queue = ['']
+        MAX_LENGTH = len(s) // k # abcabcab --> 3 cannot work since only 8 chars so use floor
+
+        freq = [0] * 26
+        for ch in s:
+            freq[ord(ch) - ord('a')] += 1
+
+        usable_chars = [chr(i + ord('a')) for i in range(26) if freq[i] >= k]
+
+        while queue:
+            current = queue.pop(0)
+
+            if len(current) > len(result) or (len(current) == len(result) and current > result):
+                result = current
+
+            if len(current) >= MAX_LENGTH:
+                continue
+
+            for c in reversed(usable_chars):
+                candidate = current + c
+
+                if is_valid(candidate, 0, k):
+                    queue.append(candidate)
+
+        return result
+
+    main = longestSubsequenceRepeatedK
+
 class Solution_2040(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 2040, 'Hard')
