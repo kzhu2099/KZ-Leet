@@ -52,6 +52,32 @@ class Solution_2016_B(Solution):
 
     main = maximumDifference
 
+class Solution_2099(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2099, 'Easy')
+
+    main = None
+
+    def maxSubsequence(self, nums, k):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/find-subsequence-of-length-k-with-the-largest-sum/?envType=daily-question&envId=2025-06-28
+        
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        '''
+
+        indexed_nums = [(num, i) for i, num in enumerate(nums)]
+
+        best_nums = sorted(indexed_nums, key = lambda x: -x[0])[:k] # get biggest, using the negative and first is faster
+
+        best_ordered_nums = sorted(best_nums, key = lambda x: x[1]) # get first indices
+
+        return [num for num, i in best_ordered_nums]
+
+    main = maxSubsequence
+
 class Solution_2138(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 2138, 'Easy')
