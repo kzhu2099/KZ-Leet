@@ -70,7 +70,7 @@ class Solution_909(Solution):
         super().__init__('Kevin Zhu', 909, 'Medium')
 
     main = None
-    
+
     def snakesAndLadders(self, board):
         '''
         Author: Kevin Zhu
@@ -250,6 +250,48 @@ class Solution_1432(Solution):
         return abs(int(a) - int(b))
 
     main = maxDiff
+
+class Solution_1498(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 1498, 'Medium')
+
+    main = None
+
+    def numSubseq(self, nums, target):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/number-of-subsequences-that-satisfy-the-given-sum-condition/?envType=daily-question&envId=2025-06-29
+        
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        '''
+
+        nums.sort()
+
+        n = len(nums)
+        MOD = 10 ** 9 + 7
+
+        answer = 0
+        left = 0
+        right = n - 1
+
+        # two pointer approach
+        while left <= right:
+            # if n[l] + n[r] <= target, any right value <= right will work.
+            if nums[left] + nums[right] <= target:
+                answer += pow(2, right - left, MOD) # efficient modular exponentiation
+                                                    # there are 2 ^ (r - l) values
+                                                    # when you add a modded value it will work if you tak ethe final mod again
+                left += 1
+
+            else:
+                # right needs to be smaller
+                right -= 1
+
+        return answer % MOD
+
+    main = numSubseq
 
 class Solution_2131(Solution):
     def __init__(self):
