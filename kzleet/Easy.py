@@ -1,5 +1,39 @@
 from .Solution import Solution
 
+class Solution_594(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 594, 'Easy')
+
+    main = None
+
+    def findLHS(self, nums):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/longest-harmonious-subsequence/?envType=daily-question&envId=2025-06-30
+
+        :type nums: List[int]
+        :rtype: int
+        '''
+
+        counts = {}
+
+        for i in nums:
+            if i in counts: # counts.keys()
+                counts[i] += 1
+
+            else:
+                counts[i] = 1
+
+        max_length = 0
+
+        for num in counts:
+            if num + 1 in counts: # so diff == 1
+                max_length = max(max_length, counts[num] + counts[num + 1])
+
+        return max_length
+
+    main = findLHS
+
 class Solution_2016_A(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 2016, 'Easy')
@@ -62,7 +96,7 @@ class Solution_2099(Solution):
         '''
         Author: Kevin Zhu
         Link: https://leetcode.com/problems/find-subsequence-of-length-k-with-the-largest-sum/?envType=daily-question&envId=2025-06-28
-        
+
         :type nums: List[int]
         :type k: int
         :rtype: List[int]
