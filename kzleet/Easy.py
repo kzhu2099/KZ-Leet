@@ -242,6 +242,31 @@ class Solution_2942(Solution):
 
     main = findWordsContaining
 
+class Solution_3330(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 3330, 'Easy')
+
+    main = None
+
+    def possibleStringCount(self, word):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/find-the-original-typed-string-i/?envType=daily-question&envId=2025-07-01
+
+        :type word: str
+        :rtype: int
+        '''
+
+        count = 1
+
+        for i in range(1, len(word)):
+            if word[i] == word[i - 1]:
+                count += 1
+
+        return count
+
+    main = possibleStringCount
+
 class Solution_3423(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 3423, 'Easy')
