@@ -376,6 +376,71 @@ class Solution_2081(Solution):
 
     main = kMirror
 
+class Solution_3333(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 3333, 'Hard')
+
+    main = None
+
+    def possibleStringCount(self, word, k):
+        '''
+        Author: Kevin Zhu (used AI for dp hints)
+        Link: https://leetcode.com/problems/find-the-original-typed-string-ii/?envType=daily-question&envId=2025-07-02
+
+        :type word: str
+        :type k: int
+        :rtype: int
+        '''
+
+        MOD = 10 ** 9 + 7
+
+        # count lengths of runs
+        lengths = []
+        prev_char = None
+
+        for char in word:
+            if char == prev_char:
+                lengths[-1] += 1  # current run
+
+            else:
+                lengths.append(1)  # new run
+                prev_char = char
+
+        num_runs = len(lengths)
+
+        total_combinations = 1
+        for length in lengths:
+            total_combinations = (total_combinations * length) % MOD
+
+        if num_runs >= k: # no extra repetitions needed
+            return total_combinations
+
+        necessary = k - num_runs
+
+        dp = [0] * necessary
+        dp[0] = 1
+
+        # use dynamic programming to find invalid solutions: ones that don't meet the length requirement
+        for length in lengths:
+            # prefix sums
+            prefix_sums = [0] * (necessary + 1)
+            for j in range(necessary):
+                prefix_sums[j + 1] = (prefix_sums[j] + dp[j]) % MOD
+
+            for j in range(necessary):
+                lower_bound = j - (length - 1)
+                if lower_bound <= 0:
+                    dp[j] = prefix_sums[j + 1]
+
+                else:
+                    dp[j] = (prefix_sums[j + 1] - prefix_sums[lower_bound]) % MOD
+
+        invalid_combinations = sum(dp) % MOD
+
+        return (total_combinations - invalid_combinations) % MOD
+
+    main = possibleStringCount
+
 class Solution_3373(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 3373, 'Hard')
