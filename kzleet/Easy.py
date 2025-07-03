@@ -242,6 +242,37 @@ class Solution_2942(Solution):
 
     main = findWordsContaining
 
+class Solution_3304(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 3304, 'Easy')
+
+    main = None
+
+    def kthCharacter(self, k):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/find-the-k-th-character-in-string-game-i/?envType=daily-question&envId=2025-07-03
+
+        :type k: int
+        :rtype: str
+        '''
+
+        '''
+        The amount of shifts is the amount of ones in the binary representation of k - 1.
+        0, 0 1, 01 12, 0112 1223, 01121223 12232334
+        Notice that the binary representation accounts for the 'root' that this k-value was from.
+        If k were 5, k - 1 = 0b100 shows that there was a shift only at the current one.
+        If k were 7, k - 1 = 0b110 shows the shift in the current shift and the shift of this number from all those before.
+
+        Essentially, representing k - 1 in binary shows the path of shifts this number had before.
+        '''
+
+        x = bin(k - 1).count('1') # how many shifts have happened, represent in binary
+
+        return chr(x % 26 + ord('a')) # mod isn't needed since the length constraint
+
+    main = kthCharacter
+
 class Solution_3330(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 3330, 'Easy')
