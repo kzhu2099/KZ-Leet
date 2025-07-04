@@ -376,6 +376,37 @@ class Solution_2081(Solution):
 
     main = kMirror
 
+class Solution_3307(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 3307, 'Hard')
+
+    main = None
+
+    def kthCharacter(self, k, operations):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/find-the-k-th-character-in-string-game-i/?envType=daily-question&envId=2025-07-03
+
+        :type k: int
+        :rtype: str
+        '''
+
+        '''
+        See easy problem 3304, this one just adds an extra condition for when operation[i] == 1.
+        '''
+
+        x = bin(k - 1) # how many shifts have happened, represent in binary
+
+        count = 0
+
+        for i, c in enumerate(reversed(x[2:])):
+            if c == '1' and operations[i] == 1: # only if the operation is 1
+                count += 1
+
+        return chr(count % 26 + ord('a')) # mod isn't needed since the length constraint
+
+    main = kthCharacter
+
 class Solution_3333(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 3333, 'Hard')
