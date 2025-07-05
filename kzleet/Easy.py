@@ -34,6 +34,38 @@ class Solution_594(Solution):
 
     main = findLHS
 
+class Solution_1394(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 1394, 'Easy')
+
+    main = None
+
+    def findLucky(self, arr):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/find-lucky-integer-in-an-array/?envType=daily-question&envId=2025-07-05
+        
+        :type arr: List[int]
+        :rtype: int
+        '''
+
+        counts = {}
+
+        for n in arr:
+            if n in counts:
+                counts[n] += 1
+
+            else:
+                counts[n] = 1
+
+        for n, f in sorted(counts.items(), reverse = True): # efficient and get largest
+            if n == f:
+                return n
+
+        return -1
+
+    main = findLucky
+
 class Solution_2016_A(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 2016, 'Easy')

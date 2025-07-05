@@ -392,7 +392,7 @@ class Solution_3307(Solution):
         '''
 
         '''
-        See easy problem 3304, this one just adds an extra condition for when operation[i] == 1.
+        See 'easy' problem 3304, this one just adds an extra condition for when operation[i] == 1.
         '''
 
         x = bin(k - 1) # how many shifts have happened, represent in binary
