@@ -261,7 +261,7 @@ class Solution_1498(Solution):
         '''
         Author: Kevin Zhu
         Link: https://leetcode.com/problems/number-of-subsequences-that-satisfy-the-given-sum-condition/?envType=daily-question&envId=2025-06-29
-        
+
         :type nums: List[int]
         :type target: int
         :rtype: int
@@ -292,6 +292,78 @@ class Solution_1498(Solution):
         return answer % MOD
 
     main = numSubseq
+
+class Solution_1865(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 1865, 'Medium')
+
+    class FindSumPairs(object):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/finding-pairs-with-a-certain-sum/?envType=daily-question&envId=2025-07-06
+        '''
+
+        def __init__(self, nums1, nums2):
+            '''
+            :type nums1: List[int]
+            :type nums2: List[int]
+            '''
+
+            self.nums1 = nums1
+            self.nums2 = nums2
+
+            self.c1 = {}
+            for i in nums1:
+                if i in self.c1:
+                    self.c1[i] += 1
+
+                else:
+                    self.c1[i] = 1
+
+            self.c2 = {}
+            for i in nums2:
+                if i in self.c2:
+                    self.c2[i] += 1
+
+                else:
+                    self.c2[i] = 1
+
+        def add(self, index, val):
+            '''
+            :type index: int
+            :type val: int
+            :rtype: None
+            '''
+
+            initial = self.nums2[index]
+            new_val = initial + val
+
+            self.nums2[index] = new_val
+
+            self.c2[initial] -= 1
+
+            if new_val in self.c2:
+                self.c2[new_val] += 1
+
+            else:
+                self.c2[new_val] = 1
+
+        def count(self, tot):
+            '''
+            :type tot: int
+            :rtype: int
+            '''
+
+            num = 0
+
+            for x in self.c1:
+                complement = tot - x # instead of loop through everything
+                if complement in self.c2:
+                    num += self.c1[x] * self.c2[complement]
+
+            return num
+
+    main = FindSumPairs
 
 class Solution_2131(Solution):
     def __init__(self):

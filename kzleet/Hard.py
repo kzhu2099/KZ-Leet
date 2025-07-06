@@ -579,14 +579,16 @@ def _nCr_mod_p(n_val, r_val):
 
     if r_val < 0 or r_val > n_val:
         return 0
+
     if r_val == 0 or r_val == n_val:
         return 1
 
     numerator = fact[n_val]
     denominator = (inv_fact[r_val] * inv_fact[n_val - r_val]) % MOD
+
     return (numerator * denominator) % MOD
 
-class Solution_3405:
+class Solution_3405(Solution):
     def __init__(self):
         super().__init__('Google Gemini / Kevin Zhu', 3405, 'Hard')
 
@@ -594,7 +596,7 @@ class Solution_3405:
 
     def countGoodArrays(self, n, m, k):
         '''
-        Extra Functions
+        Extra functions, put them outside the class definition.
 
         MOD = 10 ** 9 + 7
         MAX_N = 10 ** 5

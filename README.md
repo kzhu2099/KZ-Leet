@@ -69,6 +69,12 @@ You may look at the problems by importing like so:
 
 There may be multiple implementations: just add a letter after (`_A, _B`) for different ones.
 
+Then, to see the code, simply run `print(Solution_####())`.
+
+This works for both classes and functions, allowing you to see the full solution.
+
+For solutions that have multiple steps, there may be an internal comment (visible within the print) with those extra helper functions.
+
 ## License
 
 The License is an MIT License found in the LICENSE file.
