@@ -213,6 +213,63 @@ class Solution_1061_B(Solution):
 
     main = smallestEquivalentString
 
+class Solution_1353(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 1353, 'Medium')
+
+    main = None
+
+    def maxEvents(self, events):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended/?envType=daily-question&envId=2025-07-07
+
+        :type events: List[List[int]]
+        :rtype: int
+        '''
+
+        import heapq # simpler + more efficient than manual heaping
+
+        events.sort() # default for tuple is lambda x: x[0], x[1]
+
+        num = 0
+        end_days = []
+        event_num = 0
+        n = len(events)
+
+        day = 1
+
+        '''
+        A heap (binary min-heap) is a data structure, like a tree, where each child is <= the parent.
+        Mainting this heap invariant in this way is more efficient than appending and then sorting.
+        Heap: O(log n), basic: O(n log n).
+        '''
+
+        while event_num < n or end_days:
+            # day < the next events day --> fast-forward
+            if not end_days and day < events[event_num][0]:
+                day = events[event_num][0]
+
+            # add all event that start at this day
+            while event_num < n and events[event_num][0] == day:
+                heapq.heappush(end_days, events[event_num][1])
+                event_num += 1
+
+            # remove events that ended yesterday
+            while end_days and end_days[0] < day:
+                heapq.heappop(end_days)
+
+            # attend the event that ends the earliest
+            if end_days:
+                heapq.heappop(end_days) # removes last day and restores heap invariant
+                num += 1
+
+            day += 1
+
+        return num
+
+    main = maxEvents
+
 class Solution_1432(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 1432, 'Medium')
