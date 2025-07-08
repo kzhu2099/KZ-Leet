@@ -128,6 +128,44 @@ class Solution_1298(Solution):
 
     main = maxCandies
 
+class Solution_1758(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 1758, 'Hard')
+
+    main = None
+
+    def maxValue(self, events, k):
+        '''
+        Author: Kevin Zhu (ChatGPT help for DP)
+        Link: https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended-ii/?envType=daily-question&envId=2025-07-08
+
+        :type events: List[List[int]]
+        :type k: int
+        :rtype: int
+        '''
+
+        import bisect # see problem 2040
+
+        events.sort(key = lambda x: x[1]) # sort by end day
+        n = len(events)
+
+        end_days = [event[1] for event in events] # for binary search
+
+        # dp[i][j]: max value using first i events, attending at most j events
+        dp = [[0] * (k + 1) for _ in range(n + 1)]
+
+        for i in range(1, n + 1):
+            start_day = events[i - 1][0]
+            previous = bisect.bisect_right(end_days, start_day - 1) # find last event that ends before the current one starts
+
+            for j in range(1, k + 1):
+                # decide between choosing or skipping
+                dp[i][j] = max(dp[i][j], dp[i - 1][j], dp[previous][j - 1] + events[i - 1][2])
+
+        return dp[n][k] # resulting DP based its definition
+
+    main = maxValue
+
 class Solution_1857(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 1857, 'Hard')
@@ -274,7 +312,7 @@ class Solution_2040(Solution):
     main = None
 
     def kthSmallestProduct(self, nums1, nums2, k):
-        import bisect
+        import bisect # see problem 1758
 
         '''
         Author: Kevin Zhu
