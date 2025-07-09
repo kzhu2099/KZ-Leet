@@ -890,6 +890,53 @@ class Solution_3170(Solution):
 
     main = clearStars
 
+class Solution_3439(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 3439, 'Medium')
+
+    main = None
+
+    def maxFreeTime(self, eventTime, k, startTime, endTime):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/reschedule-meetings-for-maximum-free-time-i/?envType=daily-question&envId=2025-07-09
+
+        :type eventTime: int
+        :type k: int
+        :type startTime: List[int]
+        :type endTime: List[int]
+        :rtype: int
+        '''
+
+        '''
+        Important: Research indicates that problem 3439 is incorrect.
+        The actual description should go along the lines of...
+        'What is the maximum length of one continuous free time interval you can create by removing exactly k consecutive meetings?'
+        '''
+
+        n = len(startTime)
+
+        free_time = [0] * (n + 1)
+        free_time[0] = startTime[0]
+
+        for i in range(1, n):
+            free_time[i] = startTime[i] - endTime[i - 1] # ignore the meeting
+
+        free_time[n] = eventTime - endTime[n - 1] # free time in blocks if meetings were removed
+
+        current = sum(free_time[:k + 1]) # if you remove all meetings, including the gap after the last meeting removed
+        answer = current
+
+        for i in range(k + 1, n + 1):
+            current += free_time[i] - free_time[i - (k + 1)] # always change the current, simulate keeping the first and removing the last
+
+            if current > answer: # only update if better
+                answer = current
+
+        return answer
+
+    main = maxFreeTime
+
 class Solution_3443(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 3443, 'Medium')
