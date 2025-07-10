@@ -937,6 +937,54 @@ class Solution_3439(Solution):
 
     main = maxFreeTime
 
+class Solution_3440(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 3440, 'Medium')
+
+    main = None
+
+    def maxFreeTime(self, eventTime, startTime, endTime):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/reschedule-meetings-for-maximum-free-time-ii/?envType=daily-question&envId=2025-07-10
+
+        :type eventTime: int
+        :type startTime: List[int]
+        :type endTime: List[int]
+        :rtype: int
+        '''
+
+        n = len(startTime)
+
+        gaps = [startTime[0]] + [startTime[i] - endTime[i - 1] for i in range(1, n)] + [eventTime - endTime[-1]] # gaps between meetings
+
+        max_left = [0] * (n + 1)
+        max_right = [0] * (n + 1)
+        max_left[0] = gaps[0]
+        max_right[n] = gaps[n]
+
+        for i in range(1, n + 1):
+            max_left[i] = max(max_left[i - 1], gaps[i]) # max gap on the left side
+
+        for i in reversed(range(n)):
+            max_right[i] = max(max_right[i + 1], gaps[i]) # max gap on the right side
+
+        answer = max_left[n]
+
+        for i in range(n):
+            duration = endTime[i] - startTime[i]
+            merged_gap = gaps[i] + gaps[i + 1]
+
+            if duration <= max(max_left[i - 1] if i > 0 else 0, max_right[i + 2] if i + 2 <= n else 0): # can put it outside the current gap
+                answer = max(answer, merged_gap + duration) # moved completely outside the gap
+
+            else:
+                answer = max(answer, merged_gap) # move meeting in gap to combine the two
+
+        return answer
+
+    main = maxFreeTime
+
 class Solution_3443(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 3443, 'Medium')
