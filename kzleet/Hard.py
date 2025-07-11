@@ -414,6 +414,50 @@ class Solution_2081(Solution):
 
     main = kMirror
 
+class Solution_2402(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2402, 'Hard')
+
+    main = None
+
+    def mostBooked(self, n, meetings):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/meeting-rooms-iii/?envType=daily-question&envId=2025-07-11
+
+        :type n: int
+        :type meetings: List[List[int]]
+        :rtype: int
+        '''
+
+        import heapq
+
+        meetings.sort()
+
+        used_rooms = [] # end time, room #
+        empty_rooms = list(range(n)) # empty room numbers
+        heapq.heapify(empty_rooms)
+
+        count = [0] * n # necessary tracker
+
+        for start_time, end_time in meetings:
+            while used_rooms and used_rooms[0][0] <= start_time:
+                heapq.heappush(empty_rooms, heapq.heappop(used_rooms)[1]) # free any meetings that have ended and add to empty_rooms
+
+            if empty_rooms: # Case 1: room is free
+                room_number = heapq.heappop(empty_rooms)
+
+            else: # Case 2: wait until room is free
+                earliest, room_number = heapq.heappop(used_rooms) # get earliest end room
+                end_time = earliest + (end_time - start_time) # shift the end time of this meeting, keeping the same duration
+
+            count[room_number] += 1
+            heapq.heappush(used_rooms, (end_time, room_number)) # mark this room as used
+
+        return count.index(max(count))
+
+    main = mostBooked
+
 class Solution_3307(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 3307, 'Hard')
