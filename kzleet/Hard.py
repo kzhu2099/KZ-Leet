@@ -225,6 +225,92 @@ class Solution_1857(Solution):
 
 class Solution_2014(Solution):
     def __init__(self):
+        super().__init__('kcsquared', 1900, 'Hard')
+
+    main = None
+
+    def earliestAndLatest(self, n, a, b):
+        '''
+        Author: @kcsquared (I couldn't find any other clean & concise solutions), trickey problem.
+        Link: https://leetcode.com/problems/the-earliest-and-latest-rounds-where-players-compete/?envType=daily-question&envId=2025-07-12
+        Original Solution Link: https://leetcode.com/problems/the-earliest-and-latest-rounds-where-players-compete/solutions/1272828/10-lines-0ms-bit-counting-solution-o-1-time-o-1-space
+
+        :type n: int
+        :type firstPlayer: int
+        :type secondPlayer: int
+        :rtype: List[int]
+        '''
+
+        def ceiling_of_log2(x):
+            offset = 1 if (x & (x - 1)) != 0 else 0
+            x |= (x >> 1)
+            x |= (x >> 2)
+            x |= (x >> 4)
+            x |= (x >> 8)
+            x |= (x >> 16)
+            return popcount(x) - 1 + offset
+
+        def popcount(x):
+            x = x - ((x >> 1) & 0x55555555)
+            x = (x & 0x33333333) + ((x >> 2) & 0x33333333)
+            return (((x + (x >> 4) & 0xF0F0F0F) * 0x1010101) & 0xffffffff) >> 24
+
+        def count_trailing_zeroes(x):
+            if x & 0x1:
+                return 0
+
+            c = 1
+
+            if (x & 0xffff) == 0:
+                x >>= 16
+                c += 16
+
+            if (x & 0xff) == 0:
+                x >>= 8
+                c += 8
+
+            if (x & 0xf) == 0:
+                x >>= 4
+                c += 4
+
+            if (x & 0x3) == 0:
+                x >>= 2
+                c += 2
+
+            return c - (x & 0x1)
+
+        if a + b == n + 1:
+            return [1, 1]
+
+        if a + b >= n + 1:
+            a, b = n + 1 - b, n + 1 - a
+
+        first_plus_second = a + b
+
+        if a + 1 != b and first_plus_second >= (n + 1) // 2 + 1:
+            if first_plus_second == n:
+                if n % 4 == 2 and a + 2 == b:
+                    ans_earliest = 3 + count_trailing_zeroes(n // 4)
+
+                else:
+                    ans_earliest = 3 - (a % 2)
+            else:
+                ans_earliest = 2
+
+        else:
+            ans_earliest = 1 + ceiling_of_log2((n + first_plus_second - 2) // (first_plus_second - 1))
+
+            if a + 1 == b:
+                ans_earliest += count_trailing_zeroes(((n + (1 << (ans_earliest - 1)) - 1) >> (ans_earliest - 1)) - 1)
+
+        ans_latest = min(ceiling_of_log2(n), n + 1 - b)
+
+        return [ans_earliest, ans_latest]
+
+    main = earliestAndLatest
+
+class Solution_2014(Solution):
+    def __init__(self):
         super().__init__('Kevin Zhu', 2014, 'Hard')
 
     main = None
