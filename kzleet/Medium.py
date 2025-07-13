@@ -622,6 +622,41 @@ class Solution_2359(Solution):
 
     main = closestMeetingNode
 
+class Solution_2410(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2410, 'Medium')
+
+    main = None
+
+    def matchPlayersAndTrainers(self, players, trainers):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/maximum-matching-of-players-with-trainers/?envType=daily-question&envId=2025-07-13
+
+        :type players: List[int]
+        :type trainers: List[int]
+        :rtype: int
+        '''
+
+        players.sort(reverse = True)
+        trainers.sort(reverse = True)
+
+        matches = 0
+        t = 0
+        max_t = len(trainers)
+
+        for player in players:
+            if t == max_t:
+                break
+
+            if player <= trainers[t]: # greedy
+                matches += 1
+                t += 1
+
+        return matches
+
+    main = matchPlayersAndTrainers
+
 class Solution_2434(Solution):
     '''
     Plan:
