@@ -34,6 +34,30 @@ class Solution_594(Solution):
 
     main = findLHS
 
+class Solution_1290(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 1290, 'Easy')
+
+    main = None
+
+    def getDecimalValue(self, head):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/convert-binary-number-in-a-linked-list-to-integer/?envType=daily-question&envId=2025-07-14
+
+        :type head: Optional[ListNode]
+        :rtype: int
+        '''
+
+        total = 0
+        while head:
+            total = total * 2 + head.val # no matter what, always * 2, but only sometimes add bit
+            head = head.next
+
+        return total
+
+    main = getDecimalValue
+
 class Solution_1394(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 1394, 'Easy')
@@ -44,7 +68,7 @@ class Solution_1394(Solution):
         '''
         Author: Kevin Zhu
         Link: https://leetcode.com/problems/find-lucky-integer-in-an-array/?envType=daily-question&envId=2025-07-05
-        
+
         :type arr: List[int]
         :rtype: int
         '''
