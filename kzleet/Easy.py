@@ -298,6 +298,42 @@ class Solution_2942(Solution):
 
     main = findWordsContaining
 
+class Solution_3136(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 3136, 'Easy')
+
+    main = None
+
+    def isValid(self, word):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/valid-word/?envType=daily-question&envId=2025-07-15
+
+        :type word: str
+        :rtype: bool
+        '''
+
+        if len(word) < 3:
+            return False
+
+        vowel = consonant = False
+        vowels = 'aeiou'
+
+        for c in word:
+            if c.isalpha():
+                if c.lower() in vowels:
+                    vowel = True
+
+                else:
+                    consonant = True
+
+            elif not c.isdigit():
+                return False
+
+        return vowel and consonant
+
+    main = isValid
+
 class Solution_3304(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 3304, 'Easy')
