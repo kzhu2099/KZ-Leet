@@ -223,7 +223,7 @@ class Solution_1857(Solution):
 
     main = largestPathValue
 
-class Solution_2014(Solution):
+class Solution_1900(Solution):
     def __init__(self):
         super().__init__('kcsquared', 1900, 'Hard')
 
@@ -950,3 +950,4 @@ class Solution_3445(Solution):
         return max_overall_diff
 
     main = maxDifference
+

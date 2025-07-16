@@ -925,6 +925,56 @@ class Solution_3170(Solution):
 
     main = clearStars
 
+class Solution_3201(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 3201, 'Medium')
+
+    main = None
+
+    def maximumLength(self, nums):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/find-the-maximum-length-of-valid-subsequence-i/?envType=daily-question&envId=2025-07-16
+
+        :type nums: List[int]
+        :rtype: int
+        '''
+
+        '''
+        a run of odd + odd = even,
+        a run of even + even = even,
+        a run of odd + even = odd.
+        We can find the longest of these runs.
+        '''
+
+        odds = 0
+        evens = 0
+        alternates = 1 # no matter what, it started to alternate
+        previous = nums[0] % 2
+
+        if previous:
+            odds += 1
+
+        else:
+            evens += 1
+
+        for num in nums[1:]:
+            num = num % 2
+
+            if num:
+                odds += 1
+
+            else:
+                evens += 1
+
+            if num != previous:
+                alternates += 1
+                previous = num
+
+        return max(odds, evens, alternates)
+
+    main = maximumLength
+
 class Solution_3439(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 3439, 'Medium')
@@ -1170,3 +1220,4 @@ class Solution_3403(Solution):
         return best
 
     main = answerString
+

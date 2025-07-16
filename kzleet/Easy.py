@@ -446,3 +446,4 @@ class Solution_3442(Solution):
         return a1 - a2
 
     main = maxDifference
+
