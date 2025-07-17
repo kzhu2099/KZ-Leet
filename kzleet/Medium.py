@@ -975,6 +975,60 @@ class Solution_3201(Solution):
 
     main = maximumLength
 
+class Solution_3202(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 3202, 'Medium')
+
+    main = None
+
+    def maximumLength(self, nums, k):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/find-the-maximum-length-of-valid-subsequence-ii/?envType=daily-question&envId=2025-07-17
+
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        '''
+
+        '''
+        k = 3
+        0, 1, 3, 4, 6, 7 # 1
+
+        0, 3, 6, 9 # 0
+
+        0, 2, 3, 5, 6, 8 # 2
+
+        1, 2, 4, 5 # 0
+
+        k = 4
+        0, 1, 4, 5
+
+        0, 4, 8, 12
+        '''
+
+        mod_results = []
+
+        for mod_target in range(k): # every possible modulus result
+            dp = [0] * k # dp[j] = max len subsequence such that x % k == j and two consecutive elements in the subsequence % k = mod_target
+
+            for x in nums:
+                dp[x % k] = dp[(mod_target - x) % k] + 1
+                # finding the 'pair' that this would go with, then updating the max length for a future pairing
+
+                '''
+                Example:
+                k = 3, mod_target = 2
+                0, 5, 7, 8, 2, 1
+                At x == 2: the pair would be x == 0, at x == 1: the pair would be x == 7 (7 % 3 == 1, 1 + 1 == 2)
+                '''
+
+            mod_results.append(max(dp))
+
+        return max(mod_results)
+
+    main = maximumLength
+
 class Solution_3439(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 3439, 'Medium')
