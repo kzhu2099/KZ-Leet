@@ -500,6 +500,57 @@ class Solution_2081(Solution):
 
     main = kMirror
 
+class Solution_2163(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu / ChatGPT', 2163, 'Hard')
+
+    main = None
+
+    def minimumDifference(self, nums):
+        '''
+        Author: Kevin Zhu (ChatGPT for double heap idea)
+        Link: https://leetcode.com/problems/minimum-difference-in-sums-after-removal-of-elements/?envType=daily-question&envId=2025-07-18
+
+        :type nums: List[int]
+        :rtype: int
+        '''
+
+        import heapq
+
+        n = len(nums) // 3 # should just be / 3
+
+        # prefix sum of smallest n elements in first 2n
+        max_heap = []
+        for i in range(n):
+            heapq.heappush(max_heap, -nums[i])  # use negative values for smallest
+
+        prefix = [0] * (n + 1)
+        prefix[0] = -sum(max_heap) # since negative
+
+        for i in range(n):
+            new_val = nums[i + n]
+            # double negative: since it is already negative, add it to the value to remove
+            prefix[i + 1] = prefix[i] + heapq.heappushpop(max_heap, -new_val) + new_val
+
+        # suffix sum of largest n elements in last 2n
+        min_heap = []
+        for i in reversed(range(2 * n, 3 * n)):
+            heapq.heappush(min_heap, nums[i])
+
+        suffix = sum(min_heap)
+
+        # minimum difference between the nth prefix and (nth) suffix
+        result = prefix[n] - suffix
+
+        for i in reversed(range(n)):
+            new_val = nums[i + n]
+            suffix += new_val - heapq.heappushpop(min_heap, new_val)
+            result = min(result, prefix[i] - suffix)
+
+        return result
+
+    main = minimumDifference
+
 class Solution_2402(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 2402, 'Hard')
