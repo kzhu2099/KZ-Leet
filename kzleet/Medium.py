@@ -213,6 +213,34 @@ class Solution_1061_B(Solution):
 
     main = smallestEquivalentString
 
+class Solution_1233(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 1233, 'Medium')
+
+    main = None
+
+    def removeSubfolders(self, folder):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/remove-sub-folders-from-the-filesystem/?envType=daily-question&envId=2025-07-19
+
+        :type folder: List[str]
+        :rtype: List[str]
+        '''
+
+        folder.sort()
+        current_root = folder[0]
+        result = [current_root]
+
+        for f in folder[1:]:
+            if not f.startswith(current_root + '/'):
+                current_root = f
+                result.append(f)
+
+        return result
+
+    main = removeSubfolders
+
 class Solution_1353(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 1353, 'Medium')
