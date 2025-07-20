@@ -309,6 +309,81 @@ class Solution_1900(Solution):
 
     main = earliestAndLatest
 
+class Solution_1948(Solution):
+    def __init__(self):
+        super().__init__('ChatGPT', 1948, 'Hard')
+
+    main = None
+
+    def deleteDuplicateFolder(self, paths):
+        '''
+        Author: ChatGPT
+        Link: https://leetcode.com/problems/delete-duplicate-folders-in-system/?envType=daily-question&envId=2025-07-20
+        
+        :type paths: List[List[str]]
+        :rtype: List[List[str]]
+        '''
+
+        from collections import defaultdict
+
+        class Node:
+            def __init__(self):
+                self.children = {}
+                self.deletion_flag = False
+                self.serial = ''
+
+        root = Node()
+
+        # Step 1: Build the folder tree (trie)
+        for path in sorted(paths):
+            cur = root
+            for folder in path:
+                if folder not in cur.children:
+                    cur.children[folder] = Node()
+                cur = cur.children[folder]
+
+        # Step 2: Serialize each subtree to find duplicates
+        counter = defaultdict(int)
+
+        def dfs_serialize(node):
+            if not node.children:
+                return ''
+            parts = []
+            for name in sorted(node.children):
+                child_serial = dfs_serialize(node.children[name])
+                parts.append(name + '(' + child_serial + ')')
+            node.serial = ''.join(parts)
+            counter[node.serial] += 1
+            return node.serial
+
+        dfs_serialize(root)
+
+        # Step 3: Mark duplicates for deletion
+        def dfs_mark(node):
+            if node.serial and counter[node.serial] > 1:
+                node.deletion_flag = True
+            for child in node.children.values():
+                dfs_mark(child)
+
+        dfs_mark(root)
+
+        # Step 4: Collect paths excluding deleted nodes
+        result = []
+
+        def dfs_collect(node, path):
+            for name, child in node.children.items():
+                if child.deletion_flag:
+                    continue
+
+                result.append(path + [name])
+                dfs_collect(child, path + [name])
+
+        dfs_collect(root, [])
+
+        return result
+
+    main = deleteDuplicateFolder
+
 class Solution_2014(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 2014, 'Hard')
