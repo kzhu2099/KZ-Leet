@@ -90,6 +90,42 @@ class Solution_1394(Solution):
 
     main = findLucky
 
+class Solution_1957(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 1957, 'Easy')
+
+    main = None
+
+    def makeFancyString(self, s):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/delete-characters-to-make-fancy-string/?envType=daily-question&envId=2025-07-21
+
+        :type s: str
+        :rtype: str
+        '''
+
+        result = [] # so much faster than string
+
+        previous = ''
+        count = 0
+
+        for c in s:
+            if c == previous:
+                count += 1
+
+            else:
+                count = 1
+
+            if count < 3:
+                result.append(c)
+
+            previous = c
+
+        return ''.join(result)
+
+    main = makeFancyString
+
 class Solution_2016_A(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 2016, 'Easy')
