@@ -378,6 +378,40 @@ class Solution_1498(Solution):
 
     main = numSubseq
 
+class Solution_1695(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 1695, 'Medium')
+
+    main = None
+
+    def maximumUniqueSubarray(self, nums):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/maximum-erasure-value/?envType=daily-question&envId=2025-07-22
+
+        :type nums: List[int]
+        :rtype: int
+        '''
+
+        visited = set()
+        answer = 0
+        current_sum = 0
+        left = 0
+
+        for right in range(len(nums)):
+            while nums[right] in visited: # shrink the array until the current isn't in the visited
+                visited.remove(nums[left])
+                current_sum -= nums[left] # 'shrink'
+                left += 1 # continue shrinking
+
+            visited.add(nums[right]) # expand
+            current_sum += nums[right]
+            answer = max(answer, current_sum)
+
+        return answer
+
+    main = maximumUniqueSubarray
+
 class Solution_1865(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 1865, 'Medium')
