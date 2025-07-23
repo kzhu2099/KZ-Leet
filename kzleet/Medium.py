@@ -412,6 +412,59 @@ class Solution_1695(Solution):
 
     main = maximumUniqueSubarray
 
+class Solution_1717(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 1717, 'Medium')
+
+    main = None
+
+    def maximumGain(self, s, x, y):
+        """
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/maximum-score-from-removing-substrings/?envType=daily-question&envId=2025-07-23
+
+        :type s: str
+        :type x: int
+        :type y: int
+        :rtype: int
+        """
+
+        def remove_pair(_s, key, score):
+            stack = []
+            total = 0
+
+            first, second = key
+
+            for c in _s:
+                '''
+                this stack works because it will always process the moment there is a pair
+                even if it is like bbbbbaaaaa, the stack will have all the b's and then
+                for each a, it will eventually match up
+                if it wasw like bbcaaa, they will never be able to meet (so it won't be a substring)
+                same thing for ab, which must be done after ba (if it is worth less) to maximize rewards
+                '''
+                
+                if stack and stack[-1] == first and c == second:
+                    stack.pop()
+                    total += score
+
+                else:
+                    stack.append(c)
+
+            return ''.join(stack), total
+
+        if x > y: # get the optimal since order matters
+            s, score_x = remove_pair(s, 'ab', x)
+            s, score_y = remove_pair(s, 'ba', y)
+
+        else:
+            s, score_x = remove_pair(s, 'ba', y)
+            s, score_y = remove_pair(s, 'ab', x)
+
+        return score_x + score_y
+
+    main = maximumGain
+
 class Solution_1865(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 1865, 'Medium')
