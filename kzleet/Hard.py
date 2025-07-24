@@ -319,7 +319,7 @@ class Solution_1948(Solution):
         '''
         Author: ChatGPT
         Link: https://leetcode.com/problems/delete-duplicate-folders-in-system/?envType=daily-question&envId=2025-07-20
-        
+
         :type paths: List[List[str]]
         :rtype: List[List[str]]
         '''
@@ -625,6 +625,100 @@ class Solution_2163(Solution):
         return result
 
     main = minimumDifference
+
+class Solution_2163(Solution):
+    def __init__(self):
+        super().__init__('ChatGPT', 2322, 'Hard')
+
+    main = None
+
+    def minimumScore(self, nums, edges):
+        '''
+        Author: ChatGPT
+        Link: https://leetcode.com/problems/minimum-score-after-removals-on-a-tree/?envType=daily-question&envId=2025-07-24
+
+        :type nums: List[int]
+        :type edges: List[List[int]]
+        :rtype: int
+        '''
+
+        from collections import defaultdict
+
+        '''
+        My understanding of XOR:
+        A XOR B, eg. 3 XOR 6, into binary -->
+        0011
+        0110
+        ----
+        0101
+        A 1 bit flips the other...
+        but this is implemented in Python by the ^ operator.
+        '''
+
+        n = len(nums)
+        if n <= 2:
+            return 0
+
+        graph = defaultdict(list)
+        for u, v in edges:
+            graph[u].append(v)
+            graph[v].append(u)
+
+        # Step 1: DFS to get subtree XOR and in/out times
+        in_time = [0] * n
+        out_time = [0] * n
+        xor = [0] * n
+        time = [0]
+
+        def dfs(u, parent):
+            in_time[u] = time[0]
+            time[0] += 1
+            xor[u] = nums[u]
+
+            for v in graph[u]:
+                if v != parent:
+                    dfs(v, u)
+                    xor[u] ^= xor[v]
+
+            out_time[u] = time[0]
+            time[0] += 1
+
+        dfs(0, -1)
+
+        total_xor = xor[0]
+        result = float('inf')
+
+        def is_ancestor(u, v):
+            return in_time[u] < in_time[v] and out_time[v] < out_time[u]
+
+        # Step 2: Iterate through all pairs of nodes (potential second cuts)
+        for i in range(1, n):
+            for j in range(i + 1, n):
+                a, b, c = 0, 0, 0
+
+                # Case 1: i is an ancestor of j
+                if is_ancestor(i, j):
+                    a = xor[j]
+                    b = xor[i] ^ xor[j]
+                    c = total_xor ^ xor[i]
+
+                # Case 2: j is an ancestor of i
+                elif is_ancestor(j, i):
+                    a = xor[i]
+                    b = xor[j] ^ xor[i]
+                    c = total_xor ^ xor[j]
+
+                # Case 3: Neither is an ancestor of the other
+                else:
+                    a = xor[i]
+                    b = xor[j]
+                    c = total_xor ^ xor[i] ^ xor[j]
+
+                result = min(result, max(a, b, c) - min(a, b, c))
+
+        return result
+
+    main = minimumScore
 
 class Solution_2402(Solution):
     def __init__(self):
