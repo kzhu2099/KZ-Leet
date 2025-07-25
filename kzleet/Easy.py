@@ -483,3 +483,30 @@ class Solution_3442(Solution):
 
     main = maxDifference
 
+class Solution_3487(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 3487, 'Easy')
+
+    main = None
+
+    def maxSum(self, nums):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/maximum-unique-subarray-sum-after-deletion/?envType=daily-question&envId=2025-07-25
+
+        :type nums: List[int]
+        :rtype: int
+        '''
+
+        if max(nums) <= 0:
+            return max(nums) # prevent empty
+
+        result = []
+
+        for num in nums:
+            if num > 0 and num not in result:
+                result.append(num)
+
+        return sum(result)
+
+    main = maxSum
