@@ -1171,3 +1171,41 @@ class Solution_3445(Solution):
 
     main = maxDifference
 
+class Solution_3480(Solution):
+    def __init__(self):
+        super().__init__('Google Gemini', 3480, 'Hard')
+
+    main = None
+
+    def maxSubarrays(self, n, conflictingPairs):
+        '''
+        Author: Kevin Zhu (first part, ish) / Gemini (getting the 'removal_gain' and 0-indexing)
+        Link: https://leetcode.com/problems/maximize-subarrays-after-removing-one-conflicting-pair/submissions/1711590177/?envType=daily-question&envId=2025-07-26
+
+        :type n: int
+        :type conflictingPairs: List[List[int]]
+        :rtype: int
+        '''
+
+        right = [[] for _ in range(n)]
+
+        for a, b in conflictingPairs:
+            right[max(a - 1, b - 1)].append(min(a - 1, b - 1))
+
+        left = [-1, -1]
+
+        removal_gain = [0] * n # gained if the most impactful conflict is removed
+        answer = 0 # no removals
+
+        for r in range(n):
+            for l in right[r]:
+                left = max(left, [left[0], l], [l, left[0]])
+
+            answer += r - left[0] # MOST restrictive left value for this right
+
+            if left[0] != -1:
+                removal_gain[left[0]] += left[0] - left[1] # change if we removed the most impactful
+
+        return answer + max(removal_gain)
+
+    main = maxSubarrays
