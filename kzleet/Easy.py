@@ -255,6 +255,41 @@ class Solution_2200(Solution):
 
     main = findKDistantIndices
 
+class Solution_2210(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2210, 'Easy')
+
+    main = None
+
+    def countHillValley(self, nums):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/count-hills-and-valleys-in-an-array/?envType=daily-question&envId=2025-07-27
+
+        :type nums: List[int]
+        :rtype: int
+        '''
+
+        answer = 0
+
+        '''
+        [2,4,1,1,6,5]
+        [2,4,4,1,6,5]
+        --> when processed, since it is in this order, equivalent to [2,4,1,6,5]
+        since it propogates the last unequivalent value
+        '''
+
+        for i in range(1, len(nums) - 1):
+            if nums[i] == nums[i + 1]:
+                nums[i] = nums[i - 1]
+
+            if (nums[i] > nums[i - 1] and nums[i] > nums[i + 1]) or (nums[i] < nums[i - 1] and nums[i] < nums[i + 1]):
+                answer += 1
+
+        return answer
+
+    main = countHillValley
+
 class Solution_2566(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 2566, 'Easy')
