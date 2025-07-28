@@ -419,7 +419,7 @@ class Solution_1717(Solution):
     main = None
 
     def maximumGain(self, s, x, y):
-        """
+        '''
         Author: Kevin Zhu
         Link: https://leetcode.com/problems/maximum-score-from-removing-substrings/?envType=daily-question&envId=2025-07-23
 
@@ -427,7 +427,7 @@ class Solution_1717(Solution):
         :type x: int
         :type y: int
         :rtype: int
-        """
+        '''
 
         def remove_pair(_s, key, score):
             stack = []
@@ -443,7 +443,7 @@ class Solution_1717(Solution):
                 if it wasw like bbcaaa, they will never be able to meet (so it won't be a substring)
                 same thing for ab, which must be done after ba (if it is worth less) to maximize rewards
                 '''
-                
+
                 if stack and stack[-1] == first and c == second:
                     stack.pop()
                     total += score
@@ -536,6 +536,39 @@ class Solution_1865(Solution):
             return num
 
     main = FindSumPairs
+
+class Solution_2044(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2044, 'Medium')
+
+    main = None
+
+    def countMaxOrSubsets(self, nums):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/count-number-of-maximum-bitwise-or-subsets/?envType=daily-question&envId=2025-07-28
+
+        :type nums: List[int]
+        :rtype: int
+        '''
+
+        from collections import Counter
+
+        dp = Counter()
+        dp[0] += 1 # empty subset
+        maximum_or = 0
+
+        for num in nums:
+            for val, count in list(dp.items()):
+                dp[val | num] += count # because we don't know what the or is
+                # if we or this num, then we can use each way to get to it from the previous one
+                # --> if we can get to 5 N different ways, then if num gets us to 8, then we can then also get to 8 N additional ways
+
+            maximum_or |= num # add the or for every num
+
+        return dp[maximum_or]
+
+    main = countMaxOrSubsets
 
 class Solution_2131(Solution):
     def __init__(self):
