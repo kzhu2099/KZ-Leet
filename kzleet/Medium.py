@@ -805,6 +805,42 @@ class Solution_2410(Solution):
 
     main = matchPlayersAndTrainers
 
+class Solution_2411(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2411, 'Medium')
+
+    main = None
+
+    def smallestSubarrays(self, nums):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/smallest-subarrays-with-maximum-bitwise-or/?envType=daily-question&envId=2025-07-29
+
+        :type nums: List[int]
+        :rtype: List[int]
+        '''
+
+        if nums == []: return nums
+        elif max(nums) == 0: return [1 for i in nums] # all 0's --> bit length = 0
+
+        n = len(nums)
+        result = [0] * n
+
+        # last index for each bit
+        num_bits = max(nums).bit_length()
+        last_seen = [-1] * num_bits
+
+        for i in reversed(range(n)):
+            for b in range(num_bits):
+                if nums[i] & (1 << b): # mask --> if nums[i] has 1 at the bth bit
+                    last_seen[b] = i
+
+            result[i] = max(max(last_seen) - i + 1, 1) # farthest forward you have to go to get the max possible bits
+
+        return result
+
+    main = smallestSubarrays
+
 class Solution_2434(Solution):
     '''
     Plan:
