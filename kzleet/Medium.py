@@ -841,6 +841,38 @@ class Solution_2411(Solution):
 
     main = smallestSubarrays
 
+class Solution_2419(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 2419, 'Medium')
+
+    main = None
+
+    def longestSubarray(self, nums):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/longest-subarray-with-maximum-bitwise-and/?envType=daily-question&envId=2025-07-30
+
+        :type nums: List[int]
+        :rtype: int
+        '''
+
+        # since it is AND, any number < max(nums) WILL have a bit that is 0 when nums's bit is 1 --> maximum contiguous streak of max val.
+
+        maximum_value = max(nums)
+        maximum_length = current_length = 0
+
+        for n in nums:
+            if n == maximum_value:
+                current_length += 1
+
+            else:
+                maximum_length = max(current_length, maximum_length) # streak ended, see what the value of the streak was
+                current_length = 0
+
+        return max(current_length, maximum_length) # if the final is > max
+
+    main = longestSubarray
+
 class Solution_2434(Solution):
     '''
     Plan:
