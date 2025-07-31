@@ -1,15 +1,19 @@
 # kzleet
 
+`kzleet` is a library with frequently updated LeetCode solutions created by the community (mostly me).
+
 - HomePage: https://github.com/kzhu2099/KZ-leet
 - Issues: https://github.com/kzhu2099/KZ-leet/issues
 
-[![PyPI Downloads](https://static.pepy.tech/badge/kzleet)](https://pepy.tech/projects/kzleet)
+[![PyPI Downloads](https://static.pepy.tech/badge/kzleet)](https://pepy.tech/projects/kzleet) ![PyPI version](https://img.shields.io/pypi/v/kzleet.svg)
 
 Author: Kevin Zhu, with code that may be from others (credit given).
 
 This is a library with solutions of LeetCode everyday that is updated as quickly as possible. If I am unable to create a solution, it may not be there.
 
 If you have a solution or would like to contribute a different one email me at kzhu2099@gmail.com. If I use yours, I will make sure to give credit!!
+
+It has been stopped as of August 1, 2025, but may continue in the future.
 
 Note: dates follow the UTC date as does LeetCode.
 Important: please visit the disclaimer below.
@@ -21,7 +25,7 @@ Important: please visit the disclaimer below.
 
 ## Installation
 
-To install kzleet, use pip: ```pip install kzleet```.
+To install `kzleet`, use pip: ```pip install kzleet```.
 
 However, many prefer to use a virtual environment.
 

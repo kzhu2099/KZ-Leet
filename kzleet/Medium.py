@@ -65,6 +65,32 @@ class Solution_386_B(Solution):
 
     main = lexicalOrder
 
+class Solution_898(Solution):
+    def __init__(self):
+        super().__init__('Kevin Zhu', 898, 'Medium')
+
+    main = None
+
+    def subarrayBitwiseORs(self, arr):
+        '''
+        Author: Kevin Zhu
+        Link: https://leetcode.com/problems/bitwise-ors-of-subarrays/?envType=daily-question&envId=2025-07-31
+
+        :type arr: List[int]
+        :rtype: int
+        '''
+
+        answer = set() # all
+        current = set() # at current index
+
+        for n in arr:
+            current = {n | previous for previous in current} | {n} # either add num to the previous ones we kept or start num as a new subarray
+            answer |= current
+
+        return len(answer)
+
+    main = subarrayBitwiseORs
+
 class Solution_909(Solution):
     def __init__(self):
         super().__init__('Kevin Zhu', 909, 'Medium')
