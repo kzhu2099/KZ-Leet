@@ -7,7 +7,7 @@ class Solution:
         self.number = number
         self.difficulty = difficulty
 
-    def __str__(self):
+    def __repr__(self):
         return f'KZLeet Solution \'({type(self)})\' for LeetCode problem {self.number} by {self.author}. Problem difficulty: {self.difficulty}.\n{textwrap.dedent(inspect.getsource(self.main))}'
 
     def main(self, *args):
